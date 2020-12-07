@@ -16,6 +16,7 @@ function createWindow() {
     minWidth: 350, minHeight: 350,
     backgroundColor: 'white',
     webPreferences: {
+      // nodeIntegration: true,
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
       contextIsolation: true,
@@ -61,4 +62,6 @@ app.on('activate', () => {
   }
 })
 
-// Webpack ->
+// Webpack -> a module builder, main purpose is to bundle JS files for usage in browser
+// Babel --> a JS compiler
+
