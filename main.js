@@ -1,5 +1,8 @@
 const {app, BrowserWindow, Notification} = require('electron')
 const windowStateKeeper = require('electron-window-state')
+const path = require('path')
+
+const isDev = !app.isPackaged // if this is true, we are in production, else in dev
 
 let mainWindow
 
@@ -20,18 +23,31 @@ function createWindow() {
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
       contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'), // this is the path to the preload.js
     }
   })
 
   state.manage(mainWindow)
   mainWindow.loadFile('./index.html').then(r => {})
   // mainWindow.loadURL(`file://${__dirname}/index.html`)
-  mainWindow.webContents.openDevTools()
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on('closed', () => {  // window close listener
     mainWindow = null
   })
 
+}
+
+// adding reloading
+if (isDev) {
+  console.log(`adding electron-reload`, )
+
+  require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')  // specify the path into electron
+    
+  })  // this is the reload 
 }
 
 // when the app is ready, create the main window
