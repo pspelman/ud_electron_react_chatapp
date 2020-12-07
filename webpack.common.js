@@ -4,7 +4,7 @@ module.exports = {
   mode: 'development',
   entry: './src/js/index.js',  // this is the file we want to compile
   // TODO: explain importance of sourcemap
-  devtool: 'inline-cheap-source-map',
+  // devtool: 'inline-cheap-source-map',
   target: 'electron-renderer',
   module: {
     rules: [
