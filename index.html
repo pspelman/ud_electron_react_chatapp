@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <script src="http://localhost:8097"></script>  <!--    note: this is the line for the react devTools  -->
     <!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">-->
-        <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
+    <!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">-->
+    <meta
+            http-equiv="Content-Security-Policy"
+            content="script-src 'self' 'unsafe-eval' https://*.firebaseio.com"/>
+
     <!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' localhost:*">-->
-<!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval'">-->
+    <!--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval'">-->
     <title>ElectReact Chat</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
 <main>
-    <div id="electronChat">
-
+    <!--    <div id="electronChat">-->
+    <div id="chatApp">
     </div>
 </main>
 </body>

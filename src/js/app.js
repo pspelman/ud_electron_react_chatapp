@@ -1,11 +1,8 @@
 import React from 'react'
+import HomeView from './views/Home'
+
 
 export default function App() {
-  debugger
-  const title = "Chat World"
-  const enhancedTitle = title + ' - React App'
-
-  return (
-    <h1>{enhancedTitle}</h1>
-  )
+  // debugger
+  return <HomeView />
 }
