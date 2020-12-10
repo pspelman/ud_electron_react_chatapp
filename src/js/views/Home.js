@@ -1,41 +1,23 @@
 import React from 'react'
 import Navbar from "../components/Navbar";
-import JoinedChats from "../components/JoinedChats";
-import AvailableChats from "../components/AvailableChats";
+import JoinedChatsList from "../components/JoinedChatsList";
+import AvailableChatsList from "../components/AvailableChatsList";
+import ViewTitle from "../components/shared/ViewTitle";
+import Chat from "./Chat";
 
 // functional component
 export default function Home() {
   return (
-    <div className='content-wrapper'>
-
-      {/* ########## NAVBAR START ############ */}
-      <Navbar/>
-      {/* ########## NAVBAR END ############ */}
-
       <div className="row no-gutters fh">
         <div className="col-3 fh">
-
-          {/* ########## CHAT LIST START ############ */}
-          <JoinedChats/>
-          {/* ########## CHAT LIST END ############ */}
+        <JoinedChatsList />
         </div>
         <div className="col-9 fh">
-          {/* ########## CHAT NAME CONTAINER START ############ */}
-          <div className="chat-name-container">
-            <span className="name">Choose your channel</span>
-            <a href="/"
-               className="btn btn-primary btn-sm back-button">
-              Back</a>
-          </div>
-          {/* ########## CHAT NAME CONTAINER END ############ */}
+          <ViewTitle />
           <div className="container-fluid">
-            {/* ########## CHAT LIST START ############ */}
-            <AvailableChats/>
-
-            {/* ########## CHAT LIST END ############ */}
+            <AvailableChatsList />
           </div>
         </div>
       </div>
-    </div>
   )
 }

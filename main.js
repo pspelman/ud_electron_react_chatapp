@@ -78,6 +78,7 @@ app.on('activate', () => {
   }
 })
 
+
 // Webpack -> a module builder, main purpose is to bundle JS files for usage in browser
 // Babel --> a JS compiler
 

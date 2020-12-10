@@ -1,17 +1,15 @@
 import React from "react";
+import ChatSearch from "./ChatSearch";
+import {useHistory} from 'react-router-dom'
 
-export default function JoinedChats() {
+export default function JoinedChatsList() {
+  const history = useHistory()
   return (
     <div className="list-container">
-      <div className="chat-search-box">
-        <div className="input-group">
-          <input className="form-control" placeholder="Search"/>
-        </div>
-      </div>
+      <ChatSearch/>
       <ul className="items">
         <li
-          onClick={() => {
-          }}
+          onClick={() => history.push('/chat')}
           className="item">
           <div className="item-status">
             <img
@@ -24,8 +22,7 @@ export default function JoinedChats() {
           </p>
         </li>
         <li
-          onClick={() => {
-          }}
+          onClick={() => history.push('/chat')}
           className="item">
           <div className="item-status">
             <img
@@ -38,8 +35,7 @@ export default function JoinedChats() {
           </p>
         </li>
         <li
-          onClick={() => {
-          }}
+          onClick={() => history.push('/chat')}
           className="item">
           <div className="item-status">
             <img
@@ -52,8 +48,7 @@ export default function JoinedChats() {
           </p>
         </li>
         <li
-          onClick={() => {
-          }}
+          onClick={() => history.push('/chat')}
           className="item">
           <div className="item-status">
             <img

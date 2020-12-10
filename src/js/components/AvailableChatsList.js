@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function AvailableChats() {
+export default function AvailableChatsList() {
   return (
     <div className="row mt-3">
       {false &&
