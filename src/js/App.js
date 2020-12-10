@@ -3,7 +3,7 @@ import HomeView from './views/Home'
 import {
   HashRouter as Router,
   Switch,
-  Route, Link
+  Route, Link, useHistory, useParams
 } from 'react-router-dom'
 import Navbar from "./components/Navbar";
 import Settings from "./views/Settings";
@@ -42,8 +42,7 @@ export default function App() {
           <Settings/>
         </Route>
 
-        <Route path={"/chat"}
-        >
+        <Route path={"/chat/:id"}  >  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
           <Chat/>
         </Route>
 
@@ -53,8 +52,9 @@ export default function App() {
 
         <Route path={"/register"}>
           <Register />
-          <HomeLink />
         </Route>
+        <HomeLink />
+
       </Switch>
       </div>
     </Router>
