@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunkMiddleware from 'redux-thunk'
-import chatReducer from "../reducers/chats";
+import chatReducer from "../reducers/chatsReducer";
 
 
 export default function configureStore() {
