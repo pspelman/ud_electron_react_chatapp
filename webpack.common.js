@@ -1,5 +1,6 @@
-const {Dotenv} = require('dotenv-webpack')
 const path = require('path')
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: 'development',
@@ -34,8 +35,17 @@ module.exports = {
           'css-loader',  // translate CSS to CommonJS
           'sass-loader',  // compile SASS to CSS
         ]
+      },
+      {
+        test: /\.(jpg|jpeg|png)$/,
+        use: {
+          loader: 'url-loader'
+        }
       }
-    ]
+    ],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public')
   },
   plugins: [new Dotenv()],
   resolve: {

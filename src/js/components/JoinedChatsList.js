@@ -1,6 +1,7 @@
 import React from "react";
 import ChatSearch from "./ChatSearch";
 import {useHistory} from 'react-router-dom'
+import ninjaImage from '../ninja_PNG18.png';
 
 export default function JoinedChatsList() {
   const history = useHistory()
@@ -51,9 +52,10 @@ export default function JoinedChatsList() {
           onClick={() => history.push('/chat/4')}
           className="item">
           <div className="item-status">
-            <img
-              src="https://png2.cleanpng.com/sh/405a9ad41a8aea0c90a62b128f73a5ac/L0KzQYq4UsMxN5x2gJH9cnHxg8HokvVvfF5nh9ZxaT3nccq0gv9lcJoyTdc5OXW1coW9gBZmPmgzUKUCNUW0Q4q4Vcc4P2E7Sag9NES5RHB3jvc=/transparent-bodhi-day-bodhi-5e09e2b46cfe67.8375513915777061644464.png"
-              alt="Retail Admin"/>
+            <img src={ninjaImage} alt="Ninja"/>
+            {/*<img*/}
+            {/*  src="../ninja_PNG18.png"*/}
+            {/*  alt="Retail Admin"/>*/}
             <span className="status online"></span>
           </div>
           <p className="name-time">

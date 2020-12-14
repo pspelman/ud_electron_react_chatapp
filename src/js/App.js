@@ -10,7 +10,9 @@ import Settings from "./views/Settings";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Chat from "./views/Chat";
-
+import {createStore} from "redux";
+import configureStore from "./store";
+import {Provider} from 'react-redux'
 
 
 class HomeLink extends React.Component {
@@ -24,39 +26,44 @@ class HomeLink extends React.Component {
   }
 }
 
+const store = configureStore()
+
 export default function App() {
   // debugger
   return (
-    <Router>
-      <Navbar/>
-      <div className='content-wrapper'>
-      <Switch>
-        <Route path={"/"}
-               exact={true}
-        >
-          <HomeView/>
-        </Route>
+    <Provider store={store}>
+      <Router>
+        <Navbar/>
+        <div className='content-wrapper'>
+          <Switch>
+            <Route path={"/"}
+                   exact={true}
+            >
+              <HomeView/>
+            </Route>
 
-        <Route path={"/settings"}
-        >
-          <Settings/>
-        </Route>
+            <Route path={"/settings"}
+            >
+              <Settings/>
+            </Route>
 
-        <Route path={"/chat/:id"}  >  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
-          <Chat/>
-        </Route>
+            <Route
+              path={"/chat/:id"}>  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
+              <Chat/>
+            </Route>
 
-        <Route path={"/login"}>
-          <Login/>
-        </Route>
+            <Route path={"/login"}>
+              <Login/>
+            </Route>
 
-        <Route path={"/register"}>
-          <Register />
-        </Route>
-        <HomeLink />
+            <Route path={"/register"}>
+              <Register/>
+            </Route>
+            <HomeLink/>
 
-      </Switch>
-      </div>
-    </Router>
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   )
 }

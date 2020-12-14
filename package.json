@@ -27,13 +27,18 @@
     "dotenv-webpack": "^6.0.0",
     "electron-window-state": "^5.0.3",
     "firebase": "^8.1.2",
+    "img-loader": "^3.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
     "webpack": "^5.10.0",
     "webpack-cli": "^4.2.0"
   }
