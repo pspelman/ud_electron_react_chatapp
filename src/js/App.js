@@ -7,12 +7,12 @@ import {
 } from 'react-router-dom'
 import Navbar from "./components/Navbar";
 import Settings from "./views/Settings";
-import Login from "./views/Login";
-import Register from "./views/Register";
+import Login from "./views/Welcome";
 import Chat from "./views/Chat";
 import {createStore} from "redux";
 import configureStore from "./store";
 import {Provider} from 'react-redux'
+import WelcomeView from "./views/Welcome";
 
 
 class HomeLink extends React.Component {
@@ -39,6 +39,9 @@ export default function App() {
             <Route path={"/"}
                    exact={true}
             >
+              <WelcomeView/>
+            </Route>
+            <Route path={"/home"}>
               <HomeView/>
             </Route>
 
@@ -52,13 +55,10 @@ export default function App() {
               <Chat/>
             </Route>
 
-            <Route path={"/login"}>
+            <Route path={"/welcome"}>
               <Login/>
             </Route>
 
-            <Route path={"/register"}>
-              <Register/>
-            </Route>
             <HomeLink/>
 
           </Switch>

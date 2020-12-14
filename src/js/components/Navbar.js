@@ -25,12 +25,7 @@ export default function Navbar() {
           <span className="logged-in-user">Hi User</span>
 
           <Link
-            to={'/register'}
-            className="btn btn-sm btn-outline-danger ml-2">Register
-          </Link>
-
-          <Link
-            to={'/login'}
+            to={'/welcome'}
             className="btn btn-sm btn-outline-success ml-2">Login
           </Link>
 
