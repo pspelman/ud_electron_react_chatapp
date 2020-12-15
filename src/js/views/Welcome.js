@@ -17,7 +17,8 @@ export default function Welcome() {
   }
 
   if (user) {
-    console.log(`we have a user! Going to Home`, )
+    console.log(`we have a user! Going to Home | user: `, JSON.stringify(user))
+
     return <Redirect to={"/home"} />
   }
 

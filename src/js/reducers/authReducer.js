@@ -18,6 +18,8 @@ export default function authReducer(state=DEFAULT_STATE, action) {
       return {user: action.user, isChecking: false}
     case 'AUTH_REGISTER_ERROR':
       return {user: null, isChecking: false}
+    case 'AUTH_LOGOUT_SUCCESS':
+      return {user: null, isChecking: false}
     default:
       return state
   }

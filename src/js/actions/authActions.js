@@ -1,4 +1,5 @@
 import * as api from '../api/auth'
+import firebase from "firebase";
 
 
 export const registerUser = formData => dispatch => {
@@ -24,4 +25,11 @@ export const listenToAuthChange = () => dispatch => {
       console.log(`We are NOT authenticated`, )
     }
   })
+}
+
+export const logoutUser = () => dispatch => {
+  console.log(`trying to logout`, )
+  api
+    .logout()
+    .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}))
 }

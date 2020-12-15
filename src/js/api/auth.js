@@ -23,8 +23,9 @@ export async function registerUser({email, password, username, avatar}) {
   }
 }
 
+export const logout = () => firebase.auth().signOut()
+
 export const onAuthStateChanges = onAuth => {
   // this is where you get when user logs in or logs out
   firebase.auth().onAuthStateChanged(onAuth)  // this is going to be the callback that is called when auth state changes
-
 }
