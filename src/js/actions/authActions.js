@@ -31,5 +31,16 @@ export const logoutUser = () => dispatch => {
   console.log(`trying to logout`, )
   api
     .logout()
-    .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}))
+    // .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}))
+}
+
+export const loginUser = (formData) => dispatch => {
+  console.log(`trying to login: `, formData)
+  api
+    .login(formData)
+    .then(_ => dispatch({type: 'AUTH_LOGIN_SUCCESS'}))
+    .catch(err => {
+      console.log(`error logging in!`, err)
+      return err
+    });
 }

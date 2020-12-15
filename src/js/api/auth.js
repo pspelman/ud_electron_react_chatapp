@@ -23,7 +23,16 @@ export async function registerUser({email, password, username, avatar}) {
   }
 }
 
-export const logout = () => firebase.auth().signOut()
+export const logout = () => {
+  firebase.auth().signOut()
+    .then(msg => {
+      console.log(`invoking ELECTRON RELOAD`, )
+
+
+    })
+}
+
+export const login = ({email, password}) => firebase.auth().signInWithEmailAndPassword(email, password)  // destructure to get email / pass
 
 export const onAuthStateChanges = onAuth => {
   // this is where you get when user logs in or logs out

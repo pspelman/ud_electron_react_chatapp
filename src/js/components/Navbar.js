@@ -7,14 +7,18 @@ import {logoutUser} from "../actions/authActions";
 export default function Navbar() {
   const history = useHistory()
   const dispatch = useDispatch()
+  const logOutPage = () => {
+    dispatch(logoutUser())
+    window.electron.controlApi.restartApp()
+  }
   const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
-  const logoutBtn = (
-    <Link
-      onClick={() => dispatch(logoutUser())}
-      to={'/'}
-      className="btn btn-outline-danger ml-2">Logout
-    </Link>
-  )
+  // const logoutBtn = (
+  //   <Link
+  //     onClick={() => dispatch(logoutUser())}
+  //     to={'/'}
+  //     className="btn btn-outline-danger ml-2">Logout
+  //   </Link>
+  // )
   const message = useSelector(state => {
     return state.message
   })
@@ -38,7 +42,13 @@ export default function Navbar() {
             to={'/welcome'}
             className="btn btn-sm btn-outline-success ml-2">Login
           </Link>
-          {user ? logoutBtn : ''}
+          {user &&
+          <Link
+            to={'/'}
+            // onClick={() => dispatch(logoutUser())}
+            onClick={() => logOutPage()}
+            className="btn btn-outline-danger ml-2">Logout
+          </Link> }
         </div>
       </nav>
     </div>

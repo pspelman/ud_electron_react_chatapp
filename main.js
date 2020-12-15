@@ -1,4 +1,4 @@
-const {app, BrowserWindow, Notification} = require('electron')
+const {app, BrowserWindow, Notification, ipcMain} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 
@@ -66,6 +66,14 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
+ipcMain.handle('reload-electron-app', () => {
+  console.log(`MAIN PROCESS --> calling app.relaunch()`, )
+  // mainWindow = null
+  app.relaunch()
+  app.exit()
+
+});
 
 // When app icon is clicked and app is running, (macOS) recreate the BrowserWindow
 app.on('activate', () => {
