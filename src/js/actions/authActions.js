@@ -10,3 +10,14 @@ export const registerUser = formData => dispatch => {
       console.log(`error with registration: `, error)
     })
 }
+
+
+export const listenToAuthChange = () => dispatch => {
+  api.onAuthStateChanges(authUser => {
+    if (authUser) {
+      console.log(`We are authenticated`,);
+    } else {
+      console.log(`We are NOT authenticated`, )
+    }
+  })
+}

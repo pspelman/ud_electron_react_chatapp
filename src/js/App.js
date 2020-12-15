@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import HomeView from './views/Home'
 import {
   HashRouter as Router,
@@ -11,8 +11,9 @@ import Login from "./views/Welcome";
 import Chat from "./views/Chat";
 import {createStore} from "redux";
 import configureStore from "./store";
-import {Provider} from 'react-redux'
+import {Provider, useDispatch} from 'react-redux'
 import WelcomeView from "./views/Welcome";
+import {listenToAuthChange} from "./actions/authActions";
 
 
 class HomeLink extends React.Component {
@@ -30,6 +31,10 @@ const store = configureStore()
 
 export default function App() {
   // debugger
+  useEffect(() => {
+    store.dispatch(listenToAuthChange())
+  }, [])
+
   return (
     <Provider store={store}>
       <Router>
