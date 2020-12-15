@@ -1,6 +1,7 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunkMiddleware from 'redux-thunk'
 import chatReducer from "../reducers/chatsReducer";
+import authReducer from "../reducers/authReducer";
 
 
 export default function configureStore() {
@@ -18,7 +19,8 @@ export default function configureStore() {
   // }, applyMiddleware(...middlewares))
   const store = createStore(
     combineReducers({  // Note: hook up the store, reducer, and action handlers (middleware)
-      chats: chatReducer
+      chats: chatReducer,
+      auth: authReducer
     }), applyMiddleware(...middlewares))
 
   return store
