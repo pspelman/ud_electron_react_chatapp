@@ -3,20 +3,48 @@ import {combineReducers} from "redux";
 
 function createAuthReducer() {
 
+  function loginReducer(state = {error: null}, action) {
+    console.log(`[LOGIN reducer] - ${action.type.toUpperCase()}`)
+    switch (action.type) {
+      case 'AUTH_LOGIN_INIT':
+        return {error: null}
+      case 'AUTH_LOGIN_ERROR':
+        return {error: action.error}
+      default:
+        return state
+    }
+  }
+
+  function registerReducer(state = {error: null}, action) {
+    console.log(`[REGISTER reducer] - ${action.type.toUpperCase()}`)
+    switch (action.type) {
+      case 'AUTH_REGISTER_INIT':
+        console.log(`==> error: `, null)
+        return {error: null}
+      case 'AUTH_REGISTER_ERROR':
+        console.log(`==> action.error: `, action.error)
+        return {error: action.error}
+      default:
+        return state
+    }
+  }
+
   const user = (state=null, action) => {  // only really concerned with authentication actions
+    console.log(`[USER reducer] - ${action.type.toUpperCase()}`)
     switch (action.type) {
       case 'AUTH_ON_ERROR':
       case 'AUTH_REGISTER_INIT':  // initializing the registration
       case 'AUTH_LOGIN_INIT':  // initializing the authentication
+      case 'AUTH_LOGIN_ERROR':
       case 'AUTH_REGISTER_ERROR':
       case 'AUTH_ON_INIT':  // initializing the authentication - there's no user
       case 'AUTH_LOGOUT_SUCCESS':
-        console.log(`[${action.type.toUpperCase()}] user --> null`)
+        console.log(`[${action.type.toUpperCase()}] (USER reducer) --> null`)
         return null  // return null because there's no user
 
       case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
       case 'AUTH_REGISTER_SUCCESS':
-        console.log(`[${action.type.toUpperCase()}] user --> ${action.user}`)
+        console.log(`[${action.type.toUpperCase()}] (USER reducer) --> ${action.user}`)
         return action.user
 
       default:
@@ -26,20 +54,20 @@ function createAuthReducer() {
   }
 
   const isChecking = (state=false, action) => {
+    console.log(`[IsCHECKING reducer] - ${action.type.toUpperCase()}`)
     switch (action.type) {
       case 'AUTH_LOGIN_INIT':  // initializing the authentication
       case 'AUTH_REGISTER_INIT':
       case 'AUTH_ON_INIT':
-        console.log(`[${action.type.toUpperCase()}] isChecking --> TRUE`)
+        console.log(`isChecking --> TRUE`)
         return true
 
-      case 'AUTH_REGISTER_ERROR':
       case 'AUTH_ON_ERROR':
-      // case 'AUTH_REGISTER_SUCCESS':
-      // case 'AUTH_LOGIN_SUCCESS':
+      case 'AUTH_REGISTER_ERROR':
+      case 'AUTH_LOGIN_ERROR':
       case 'AUTH_LOGOUT_SUCCESS':
       case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
-        console.log(`[${action.type.toUpperCase()}] isChecking --> FALSE`)
+        console.log(`isChecking --> FALSE`)
         return  false
 
       default:
@@ -50,7 +78,9 @@ function createAuthReducer() {
 
   return combineReducers({
     user,
-    isChecking
+    isChecking,
+    login: loginReducer,
+    register: registerReducer,
   })
 }
 

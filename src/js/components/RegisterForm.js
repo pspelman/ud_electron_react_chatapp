@@ -1,6 +1,6 @@
 import React from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../actions/authActions";
 
 
@@ -8,6 +8,8 @@ import {registerUser} from "../actions/authActions";
 export default function RegisterForm() {
   const {register, handleSubmit} = useForm()
   const dispatch = useDispatch()
+
+  const error = useSelector(({auth}) => auth.register.error)
 
   const onLogin = registerData => {
     dispatch(registerUser(registerData))
@@ -20,6 +22,7 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
+            defaultValue={"stuff@phil.com"}
             ref={register}
             type="email"
             className="form-control"
@@ -31,6 +34,7 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
+            defaultValue={"stuff"}
             ref={register}
             type="text"
             name="username"
@@ -41,6 +45,7 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="avatar">Avatar</label>
           <input
+            defaultValue={"stuff"}
             ref={register}
             type="text"
             name="avatar"
@@ -51,13 +56,14 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
+            defaultValue={"1234"}
             ref={register}
             name="password"
             type="password"
             className="form-control"
             id="password" />
         </div>
-        { false && <div className="alert alert-danger small">Some Error</div>}
+        { error && <div className="alert alert-danger small">{error}</div>}
         <button type="submit" className="btn btn-outline-primary">Register</button>
       </div>
     </form>

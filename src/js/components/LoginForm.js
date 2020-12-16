@@ -1,12 +1,14 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import {loginUser} from "../actions/authActions";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export default function LoginForm() {
   const {register, handleSubmit} = useForm()
   const dispatch = useDispatch()
+
+  const error = useSelector(({auth}) => auth.login.error)
 
   const onSubmit = data => {
     console.log(`trying to do login`, )
@@ -15,7 +17,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="centered-container-form">
-      <div className="header">Welcome here!</div>
+      <div className="header">Welcome!</div>
       <div className="subheader">Login and chat with other people!</div>
       <div className="form-container">
         <div className="form-group">
@@ -41,7 +43,7 @@ export default function LoginForm() {
             className="form-control"
             id="password"/>
         </div>
-        {false && <div className="alert alert-danger small">Some error</div>}
+        { error && <div className="alert alert-danger small">{error.message}</div>}
         <button type="submit" className="btn btn-outline-primary">Login
         </button>
       </div>

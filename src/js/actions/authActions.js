@@ -3,12 +3,13 @@ import firebase from "firebase";
 
 
 export const registerUser = formData => dispatch => {
+  dispatch({type: 'AUTH_REGISTER_INIT'})
   api.registerUser(formData)
     .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS'}))
     .catch(error => {
       alert("there was an ERROR during registration: ", JSON.stringify(error))
       console.log(`error with registration: `, error)
-      return error
+      dispatch({type: 'AUTH_REGISTER_ERROR', error: error})
     })
 
 }
@@ -36,7 +37,7 @@ export const logoutUser = () => dispatch => {
     // .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}))
 }
 
-export const loginUser = (formData) => dispatch => {
+export const loginUser = formData => dispatch => {
   console.log(`trying to login: `, formData)
   dispatch({type: 'AUTH_LOGIN_INIT'})
   api
@@ -44,6 +45,7 @@ export const loginUser = (formData) => dispatch => {
     .then(_ => dispatch({type: 'AUTH_ON_SUCCESS'}))
     .catch(err => {
       console.log(`error logging in!`, err)
+      dispatch({type: 'AUTH_LOGIN_ERROR', error: err})
       return err
     });
 }
