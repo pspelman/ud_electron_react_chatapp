@@ -18,32 +18,6 @@ function createRegisterReducer() {
 
 function createAuthReducer() {
 
-  // function loginReducer(state = {error: null}, action) {
-  //   console.log(`[LOGIN reducer] - ${action.type.toUpperCase()}`)
-  //   switch (action.type) {
-  //     case 'AUTH_LOGIN_INIT':
-  //       return {error: null}
-  //     case 'AUTH_LOGIN_ERROR':
-  //       return {error: action.error}
-  //     default:
-  //       return state
-  //   }
-  // }
-  //
-  // function registerReducer(state = {error: null}, action) {
-  //   console.log(`[REGISTER reducer] - ${action.type.toUpperCase()}`)
-  //   switch (action.type) {
-  //     case 'AUTH_REGISTER_INIT':
-  //       console.log(`==> error: `, null)
-  //       return {error: null}
-  //     case 'AUTH_REGISTER_ERROR':
-  //       console.log(`==> action.error: `, action.error)
-  //       return {error: action.error}
-  //     default:
-  //       return state
-  //   }
-  // }
-
   const user = (state=null, action) => {  // only really concerned with authentication actions
     console.log(`[USER reducer] - ${action.type.toUpperCase()}`)
     switch (action.type) {
