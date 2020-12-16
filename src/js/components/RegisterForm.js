@@ -2,6 +2,7 @@ import React from "react";
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../actions/authActions";
+import LoadingView from "./shared/LoadingView";
 
 
 
@@ -10,6 +11,10 @@ export default function RegisterForm() {
   const dispatch = useDispatch()
 
   const error = useSelector(({auth}) => auth.register.error)
+  const isChecking = useSelector(({auth}) => auth.register.isChecking)
+  if (isChecking) {
+    return <LoadingView/>
+  }
 
   const onLogin = registerData => {
     dispatch(registerUser(registerData))

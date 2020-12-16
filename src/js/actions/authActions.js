@@ -5,9 +5,9 @@ import firebase from "firebase";
 export const registerUser = formData => dispatch => {
   dispatch({type: 'AUTH_REGISTER_INIT'})
   api.registerUser(formData)
-    .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS'}))
+    .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS', user: _}))
     .catch(error => {
-      alert("there was an ERROR during registration: ", JSON.stringify(error))
+      // alert("there was an ERROR during registration: ", JSON.stringify(error))
       console.log(`error with registration: `, error)
       dispatch({type: 'AUTH_REGISTER_ERROR', error: error})
     })

@@ -1,8 +1,9 @@
 import {combineReducers} from "redux";
-import {createErrorReducer} from "./commonReducer";
+import {createErrorReducer, createIsFetchingReducer} from "./commonReducer";
 
 function createLoginReducer() {
   return combineReducers({
+    isChecking: createIsFetchingReducer('AUTH_LOGIN'),
     error: createErrorReducer('AUTH_LOGIN')
   })
 }
@@ -10,6 +11,7 @@ function createLoginReducer() {
 
 function createRegisterReducer() {
   return combineReducers({
+    isChecking: createIsFetchingReducer('AUTH_REGISTER'),
     error: createErrorReducer('AUTH_REGISTER')
   })
 }
@@ -42,32 +44,33 @@ function createAuthReducer() {
 
   }
 
-  const isChecking = (state=false, action) => {
-    console.log(`[IsCHECKING reducer] - ${action.type.toUpperCase()}`)
-    switch (action.type) {
-      case 'AUTH_LOGIN_INIT':  // initializing the authentication
-      case 'AUTH_REGISTER_INIT':
-      case 'AUTH_ON_INIT':
-        console.log(`isChecking --> TRUE`)
-        return true
-
-      case 'AUTH_ON_ERROR':
-      case 'AUTH_REGISTER_ERROR':
-      case 'AUTH_LOGIN_ERROR':
-      case 'AUTH_LOGOUT_SUCCESS':
-      case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
-        console.log(`isChecking --> FALSE`)
-        return  false
-
-      default:
-        return state
-    }
-
-  }
+  // const isChecking = (state=false, action) => {
+  //   // console.log(`[IsCHECKING reducer] - ${action.type.toUpperCase()}`)
+  //   return createIsFetchingReducer(state, action)
+  //   // switch (action.type) {
+  //   //   case 'AUTH_LOGIN_INIT':  // initializing the authentication
+  //   //   case 'AUTH_REGISTER_INIT':
+  //   //   case 'AUTH_ON_INIT':
+  //   //     console.log(`isChecking --> TRUE`)
+  //   //     return true
+  //   //
+  //   //   case 'AUTH_ON_ERROR':
+  //   //   case 'AUTH_REGISTER_ERROR':
+  //   //   case 'AUTH_LOGIN_ERROR':
+  //   //   case 'AUTH_LOGOUT_SUCCESS':
+  //   //   case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
+  //   //     console.log(`isChecking --> FALSE`)
+  //   //     return  false
+  //   //
+  //   //   default:
+  //   //     return state
+  //   // }
+  //
+  // }
 
   return combineReducers({
     user,
-    isChecking,
+    isChecking: createIsFetchingReducer('AUTH_ON'),
     login: createLoginReducer(),
     register: createRegisterReducer(),
   })
