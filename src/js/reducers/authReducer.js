@@ -1,33 +1,48 @@
 import {combineReducers} from "redux";
+import {createErrorReducer} from "./commonReducer";
+
+function createLoginReducer() {
+  return combineReducers({
+    error: createErrorReducer('AUTH_LOGIN')
+  })
+}
+
+
+function createRegisterReducer() {
+  return combineReducers({
+    error: createErrorReducer('AUTH_REGISTER')
+  })
+}
+
 
 
 function createAuthReducer() {
 
-  function loginReducer(state = {error: null}, action) {
-    console.log(`[LOGIN reducer] - ${action.type.toUpperCase()}`)
-    switch (action.type) {
-      case 'AUTH_LOGIN_INIT':
-        return {error: null}
-      case 'AUTH_LOGIN_ERROR':
-        return {error: action.error}
-      default:
-        return state
-    }
-  }
-
-  function registerReducer(state = {error: null}, action) {
-    console.log(`[REGISTER reducer] - ${action.type.toUpperCase()}`)
-    switch (action.type) {
-      case 'AUTH_REGISTER_INIT':
-        console.log(`==> error: `, null)
-        return {error: null}
-      case 'AUTH_REGISTER_ERROR':
-        console.log(`==> action.error: `, action.error)
-        return {error: action.error}
-      default:
-        return state
-    }
-  }
+  // function loginReducer(state = {error: null}, action) {
+  //   console.log(`[LOGIN reducer] - ${action.type.toUpperCase()}`)
+  //   switch (action.type) {
+  //     case 'AUTH_LOGIN_INIT':
+  //       return {error: null}
+  //     case 'AUTH_LOGIN_ERROR':
+  //       return {error: action.error}
+  //     default:
+  //       return state
+  //   }
+  // }
+  //
+  // function registerReducer(state = {error: null}, action) {
+  //   console.log(`[REGISTER reducer] - ${action.type.toUpperCase()}`)
+  //   switch (action.type) {
+  //     case 'AUTH_REGISTER_INIT':
+  //       console.log(`==> error: `, null)
+  //       return {error: null}
+  //     case 'AUTH_REGISTER_ERROR':
+  //       console.log(`==> action.error: `, action.error)
+  //       return {error: action.error}
+  //     default:
+  //       return state
+  //   }
+  // }
 
   const user = (state=null, action) => {  // only really concerned with authentication actions
     console.log(`[USER reducer] - ${action.type.toUpperCase()}`)
@@ -79,8 +94,8 @@ function createAuthReducer() {
   return combineReducers({
     user,
     isChecking,
-    login: loginReducer,
-    register: registerReducer,
+    login: createLoginReducer(),
+    register: createRegisterReducer(),
   })
 }
 
