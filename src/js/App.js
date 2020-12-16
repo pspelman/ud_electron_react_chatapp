@@ -44,7 +44,7 @@ export default function App() {
             <Route path={"/"}
                    exact={true}
             >
-              <WelcomeView/>
+              <WelcomeView />
             </Route>
             <Route path={"/home"}>
               <HomeView/>

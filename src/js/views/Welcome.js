@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import {Redirect} from "react-router";
+import LoadingView from "../components/shared/LoadingView";
 
 
 export default function Welcome() {
@@ -10,10 +11,9 @@ export default function Welcome() {
   const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
   const isChecking = useSelector(({auth}) => auth.isChecking)  // using redux to see if authentication is in progress
 
-  if (isChecking) {
+  if (isChecking) {  // want to show a loader if we're checking on the auth status
     console.log(`checking auth`, )
-
-    return  <h1>Checking authentication status</h1>
+    return <LoadingView />
   }
 
   if (user) {
