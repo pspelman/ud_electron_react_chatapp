@@ -2,6 +2,7 @@ import React from "react";
 import {Link, useHistory} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../actions/authActions";
+import ninjaImage from '../ninja_PNG18.png';
 
 
 export default function Navbar() {
@@ -38,12 +39,13 @@ export default function Navbar() {
         MESSAGE {message}
 
         <div className="chat-navbar-inner-right">
+          {user ? <img src={ninjaImage} className={"avatar mr-2"} alt=""/> : ''}
           <span className="logged-in-user">Hi {user ? user.username : 'User'}</span>
 
-          <Link
-            to={'/welcome'}
-            className="btn btn-sm btn-outline-success ml-2">Login
-          </Link>
+          {/*<Link*/}
+          {/*  to={'/welcome'}*/}
+          {/*  className="btn btn-sm btn-outline-success ml-2">Login*/}
+          {/*</Link>*/}
           {user &&
           <Link
             to={'/'}

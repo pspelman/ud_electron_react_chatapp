@@ -38,6 +38,7 @@ export const logoutUser = () => dispatch => {
 
 export const loginUser = (formData) => dispatch => {
   console.log(`trying to login: `, formData)
+  dispatch({type: 'AUTH_LOGIN_INIT'})
   api
     .login(formData)
     .then(_ => dispatch({type: 'AUTH_ON_SUCCESS'}))
