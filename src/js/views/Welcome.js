@@ -11,14 +11,13 @@ export default function Welcome() {
   const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
   const isChecking = useSelector(({auth}) => auth.isChecking)  // using redux to see if authentication is in progress
 
-  if (true) {  // want to show a loader if we're checking on the auth status
+  if (isChecking) {  // want to show a loader if we're checking on the auth status
     console.log(`checking auth`, )
     return <LoadingView />
   }
 
   if (user) {
     console.log(`we have a user! Going to Home | user: `, JSON.stringify(user))
-
     return <Redirect to={"/home"} />
   }
 

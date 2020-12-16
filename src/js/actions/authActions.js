@@ -16,16 +16,18 @@ export const registerUser = formData => dispatch => {
 
 export const listenToAuthChange = () => dispatch => {
   dispatch({type: 'AUTH_ON_INIT'})  // this fires off to initialize authentication
-  api.onAuthStateChanges(authUser => {
+  return api.onAuthStateChanges(async authUser => {
     if (authUser) {
-      dispatch({type: 'AUTH_ON_SUCCESS', user: authUser})
-      console.log(`We are authenticated`,);
+      console.log(`trying to get the user for UID: `, authUser.uid)
+      const userProfile = await api.getUserProfile(authUser.uid)  // this will get the userProfile from the DB
+      dispatch({type: 'AUTH_ON_SUCCESS', user: userProfile})
     } else {
       dispatch({type: 'AUTH_ON_ERROR', user: null})
       console.log(`We are NOT authenticated`, )
     }
   })
 }
+
 
 export const logoutUser = () => dispatch => {
   console.log(`trying to logout`, )
@@ -38,7 +40,7 @@ export const loginUser = (formData) => dispatch => {
   console.log(`trying to login: `, formData)
   api
     .login(formData)
-    .then(_ => dispatch({type: 'AUTH_LOGIN_SUCCESS'}))
+    .then(_ => dispatch({type: 'AUTH_ON_SUCCESS'}))
     .catch(err => {
       console.log(`error logging in!`, err)
       return err

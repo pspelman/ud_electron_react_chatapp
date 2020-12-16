@@ -9,7 +9,6 @@ export default function LoginForm() {
   const dispatch = useDispatch()
 
   const onSubmit = data => {
-    alert(JSON.stringify(data))
     console.log(`trying to do login`, )
     dispatch(loginUser(data))
   }
@@ -22,6 +21,7 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
+            defaultValue={"phil@phil.com"}
             ref={register}
             name="email"
             type="email"
@@ -33,6 +33,8 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
+            autoFocus={true}
+            defaultValue={'123456'}
             ref={register}
             name="password"
             type="password"

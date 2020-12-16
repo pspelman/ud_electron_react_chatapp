@@ -12,6 +12,8 @@ export default function Navbar() {
     window.electron.controlApi.restartApp()
   }
   const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
+
+
   // const logoutBtn = (
   //   <Link
   //     onClick={() => dispatch(logoutUser())}
@@ -36,7 +38,7 @@ export default function Navbar() {
         MESSAGE {message}
 
         <div className="chat-navbar-inner-right">
-          <span className="logged-in-user">Hi User</span>
+          <span className="logged-in-user">Hi {user ? user.username : 'User'}</span>
 
           <Link
             to={'/welcome'}
