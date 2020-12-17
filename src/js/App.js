@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import HomeView from './views/Home'
 import {
+  Redirect,
   HashRouter as Router,
   Switch,
   Route, Link, useHistory, useParams
@@ -22,11 +23,27 @@ class HomeLink extends React.Component {
   render() {
     return <Link
       to={"/"}
-
       className="btn btn-sm btn-outline-danger ml-2">
       Home
     </Link>;
   }
+}
+
+function AuthRoute({children, ...rest}) {
+  const user = useSelector(({auth}) => auth.user)
+
+  const onlyChild = React.Children.only(children)  // ensure we are only allowing a single child (no additional children)
+
+  return (
+    <Route
+      {...rest}  // destructurize anything else coming in
+      render={props =>
+        user ?
+          React.cloneElement(onlyChild, {...rest, ...props}) :
+          <Redirect to={"/"} />
+      }
+      />
+  )
 }
 
 const ContentWrapper = ({children}) => <div className="content-wrapper">{children}</div>
@@ -48,24 +65,21 @@ function ChatApp() {
         <Navbar/>
         <ContentWrapper>
           <Switch>
-            <Route path={"/"}
-                   exact={true}
-            >
+            <Route path={"/"} exact={true}>
               <WelcomeView />
             </Route>
-            <Route path={"/home"}>
+
+            <AuthRoute path={"/home"}>
               <HomeView/>
-            </Route>
+            </AuthRoute>
 
-            <Route path={"/settings"}
-            >
+            <AuthRoute path={"/settings"}>
               <Settings/>
-            </Route>
+            </AuthRoute>
 
-            <Route
-              path={"/chat/:id"}>  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
+            <AuthRoute path={"/chat/:id"}>  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
               <Chat/>
-            </Route>
+            </AuthRoute>
 
             <Route path={"/welcome"}>
               <Login/>
