@@ -21,7 +21,7 @@ function createRegisterReducer() {
 function createAuthReducer() {
 
   const user = (state=null, action) => {  // only really concerned with authentication actions
-    console.log(`[USER reducer] - ${action.type.toUpperCase()}`)
+    console.log(`[AUTH reducer] - ${action.type.toUpperCase()}`)
     switch (action.type) {
       case 'AUTH_ON_ERROR':
       case 'AUTH_REGISTER_INIT':  // initializing the registration
@@ -30,12 +30,14 @@ function createAuthReducer() {
       case 'AUTH_REGISTER_ERROR':
       case 'AUTH_ON_INIT':  // initializing the authentication - there's no user
       case 'AUTH_LOGOUT_SUCCESS':
-        console.log(`[${action.type.toUpperCase()}] (USER reducer) --> null`)
+        console.log(`[${action.type.toUpperCase()}] (AUTH reducer) --> null`)
         return null  // return null because there's no user
 
+
       case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
+      case 'AUTH_LOGIN_SUCCESS':  // the action comes back with the user data
       case 'AUTH_REGISTER_SUCCESS':
-        console.log(`[${action.type.toUpperCase()}] (USER reducer) --> ${action.user}`)
+        console.log(`[${action.type.toUpperCase()}] (AUTH reducer) --> ${action.user}`)
         return action.user
 
       default:
@@ -44,29 +46,6 @@ function createAuthReducer() {
 
   }
 
-  // const isChecking = (state=false, action) => {
-  //   // console.log(`[IsCHECKING reducer] - ${action.type.toUpperCase()}`)
-  //   return createIsFetchingReducer(state, action)
-  //   // switch (action.type) {
-  //   //   case 'AUTH_LOGIN_INIT':  // initializing the authentication
-  //   //   case 'AUTH_REGISTER_INIT':
-  //   //   case 'AUTH_ON_INIT':
-  //   //     console.log(`isChecking --> TRUE`)
-  //   //     return true
-  //   //
-  //   //   case 'AUTH_ON_ERROR':
-  //   //   case 'AUTH_REGISTER_ERROR':
-  //   //   case 'AUTH_LOGIN_ERROR':
-  //   //   case 'AUTH_LOGOUT_SUCCESS':
-  //   //   case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
-  //   //     console.log(`isChecking --> FALSE`)
-  //   //     return  false
-  //   //
-  //   //   default:
-  //   //     return state
-  //   // }
-  //
-  // }
 
   return combineReducers({
     user,

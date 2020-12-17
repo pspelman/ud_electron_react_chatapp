@@ -68,10 +68,10 @@ app.on('window-all-closed', () => {
 })
 
 ipcMain.handle('reload-electron-app', () => {
-  console.log(`MAIN PROCESS --> calling app.relaunch()`, )
+  // console.log(`MAIN PROCESS --> calling app.relaunch()`, )
   // mainWindow = null
-  app.relaunch()
-  app.exit()
+  // app.relaunch()
+  // app.exit()
 
 });
 

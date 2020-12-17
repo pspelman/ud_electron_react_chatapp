@@ -16,6 +16,7 @@ export const createErrorReducer = actionType => {
 
 export const createIsFetchingReducer = actionType => {
   return (state = false, action) => {
+    console.log(`[${action.type.toUpperCase()}] (COMMON IS FETCHING reducer) --> `, action)
     switch (action.type) {
       case `${actionType}_INIT`:
         return true

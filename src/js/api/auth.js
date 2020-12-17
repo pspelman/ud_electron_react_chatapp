@@ -42,12 +42,7 @@ export async function registerUser({email, password, username, avatar}) {
 }
 
 export const logout = () => {
-  firebase.auth().signOut()
-    .then(msg => {
-      console.log(`invoking ELECTRON RELOAD`,)
-
-
-    })
+  return firebase.auth().signOut()
 }
 
 export const login = async ({email, password}) => firebase.auth().signInWithEmailAndPassword(email, password)  // destructure to get email / pass

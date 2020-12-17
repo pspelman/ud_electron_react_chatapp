@@ -19,10 +19,16 @@ import * as api from '../api/chatsApi'
 //   };
 // }
 
-export const fetchChats = () => dispatch =>  // Note: this is a rewritten version of the code above
+export const fetchChats = () => dispatch => { // Note: this is a rewritten version of the code above
+  dispatch({type: 'CHATS_FETCH_INIT'})
   api
     .fetchChats()
     .then(chats => dispatch({
       type: 'CHATS_FETCH_SUCCESS',
       chats
     }))
+    .catch(err => {
+      console.log(`error fetching chats: `, err)
+      dispatch({type: 'CHATS_FETCH_ERROR', error: err})
+    })
+}
