@@ -29,14 +29,15 @@ class HomeLink extends React.Component {
 
 const store = configureStore()
 
-export default function App() {
+function ChatApp() {
   // debugger
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    store.dispatch(listenToAuthChange())
-  }, [])
+    dispatch(listenToAuthChange())
+  }, [dispatch])
 
   return (
-    <Provider store={store}>
       <Router>
         <Navbar/>
         <div className='content-wrapper'>
@@ -69,6 +70,14 @@ export default function App() {
           </Switch>
         </div>
       </Router>
+  )
+}
+
+export default function App() {
+  // debugger
+  return (
+    <Provider store={store}>
+      <ChatApp />
     </Provider>
   )
 }

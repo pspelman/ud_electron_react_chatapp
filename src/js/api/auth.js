@@ -47,6 +47,7 @@ export const logout = () => {
 
 export const login = async ({email, password}) => firebase.auth().signInWithEmailAndPassword(email, password)  // destructure to get email / pass
 
+
 // export const onAuthStateChanges = onAuth => {
 //   // this is where you get when user logs in or logs out
 //   firebase.auth().onAuthStateChanged(onAuth)  // this is going to be the callback that is called when auth state changes
