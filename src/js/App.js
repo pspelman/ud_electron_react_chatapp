@@ -14,6 +14,7 @@ import configureStore from "./store";
 import {Provider, useDispatch} from 'react-redux'
 import WelcomeView from "./views/Welcome";
 import {listenToAuthChange} from "./actions/authActions";
+import StoreProvider from "./store/StoreProvider";
 
 
 class HomeLink extends React.Component {
@@ -27,7 +28,6 @@ class HomeLink extends React.Component {
   }
 }
 
-const store = configureStore()
 
 function ChatApp() {
   // debugger
@@ -76,8 +76,8 @@ function ChatApp() {
 export default function App() {
   // debugger
   return (
-    <Provider store={store}>
+    <StoreProvider>
       <ChatApp />
-    </Provider>
+    </StoreProvider>
   )
 }
