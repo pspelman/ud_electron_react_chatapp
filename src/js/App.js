@@ -11,10 +11,11 @@ import Login from "./views/Welcome";
 import Chat from "./views/Chat";
 import {createStore} from "redux";
 import configureStore from "./store";
-import {Provider, useDispatch} from 'react-redux'
+import {Provider, useDispatch, useSelector} from 'react-redux'
 import WelcomeView from "./views/Welcome";
 import {listenToAuthChange} from "./actions/authActions";
 import StoreProvider from "./store/StoreProvider";
+import LoadingView from "./components/shared/LoadingView";
 
 
 class HomeLink extends React.Component {
@@ -28,19 +29,24 @@ class HomeLink extends React.Component {
   }
 }
 
+const ContentWrapper = ({children}) => <div className="content-wrapper">{children}</div>
 
 function ChatApp() {
   // debugger
   const dispatch = useDispatch()
+  const isChecking = useSelector(({auth}) => auth.isChecking)
 
   useEffect(() => {
     dispatch(listenToAuthChange())
-  }, [dispatch])
+  }, [dispatch]);
 
+  if (isChecking) {
+    return <LoadingView />
+  }
   return (
       <Router>
         <Navbar/>
-        <div className='content-wrapper'>
+        <ContentWrapper>
           <Switch>
             <Route path={"/"}
                    exact={true}
@@ -68,7 +74,7 @@ function ChatApp() {
             <HomeLink/>
 
           </Switch>
-        </div>
+        </ContentWrapper>
       </Router>
   )
 }
