@@ -23,18 +23,23 @@ export const listenToAuthChange = () => dispatch => {
       const userProfile = await api.getUserProfile(authUser.uid)  // this will get the userProfile from the DB
       dispatch({type: 'AUTH_ON_SUCCESS', user: userProfile})
     } else {
-      dispatch({type: 'AUTH_ON_ERROR', user: null})
+      dispatch({type: 'AUTH_ON_ERROR', user: null, error: 'SOME ERROR ABOUT AUTH?'})
       console.log(`We are NOT authenticated`, )
     }
   })
 }
 
 
+
+
 export const logoutUser = () => dispatch => {
   console.log(`trying to logout`, )
+  // dispatch({type: 'AUTH_LOGOUT_INIT'})
   api
     .logout()
-    .then(_ => dispatch({type: 'AUTH_LOGOUT_SUCCESS'}))
+    .then(_ => {
+      dispatch({type: 'AUTH_LOGOUT_SUCCESS'})
+    })
     .catch(err => {
       console.log(`error logging out: `, err)
       dispatch({type: 'AUTH_LOGOUT_ERROR', error: err})

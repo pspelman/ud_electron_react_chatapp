@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Notification, ipcMain} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 const isDev = !app.isPackaged // if this is true, we are in production, else in dev
 
@@ -52,8 +53,14 @@ if (isDev) {
 
 // when the app is ready, create the main window
 app.whenReady().then(() => {
-
-  createWindow()
+  {
+    setTimeout(createWindow, 400);
+      installExtension(REDUX_DEVTOOLS)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log("An error occurred: ", err));
+  }
+  // createWindow()
   //
   // const notification = new Notification({title: 'Welcome', body: 'You\'re online'})
   // notification.on('click', e => {

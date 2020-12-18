@@ -2,12 +2,17 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunkMiddleware from 'redux-thunk'
 import chatReducer from "../reducers/chatsReducer";
 import authReducer from "../reducers/authReducer";
-
+// import {devToolsEnhancer} from "electron-redux-devtools";
+// import { devToolsEnhancer } from 'electron-redux-devtools';
 
 export default function configureStore() {
+  console.log(`devToolsEnhancer: `, window.electron.devToolsEnhancer)
+
 
   const middlewares = [
-    thunkMiddleware
+    // window.electron.devToolsEnhancer,
+    thunkMiddleware,
+    // devToolsEnhancer(),
   ]
 
   // const store = createStore(() => {

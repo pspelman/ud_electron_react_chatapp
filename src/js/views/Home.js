@@ -15,22 +15,29 @@ import {Redirect} from "react-router";
 export default function Home() {
   const dispatch = useDispatch()
   const chats = useSelector(({chats}) => chats.chats)
-  const isChecking = useSelector(({chats}) => chats.loader.isLoading)
+  const chatsLoading = useSelector(({chats}) => chats.isLoading)
+  const isChecking = useSelector(({chats}) => chats.isLoading)
   const user = useSelector(({auth}) => auth.user)
+  console.log(`HOME: user: `, user)
+  console.log(`HOME: \nchatsLoading: ${chatsLoading}\nisChecking: ${isChecking}`, )
 
-  useEffect(() => {
-    dispatch(fetchChats())
-  }, [dispatch]);
 
-  if (isChecking) {  // want to show a loader if we're checking on the auth status
-    console.log(`still loading`, )
+  if (user) {
+    useEffect(() => {
+      dispatch(fetchChats())
+    }, [dispatch]);
+  }
+
+  if (isChecking || chatsLoading) {  // want to show a loader if we're checking on the auth status
+    console.log(`AUTH LOADING ${isChecking} | CHATS LOADING ${chatsLoading} | still loading`, )
     return <LoadingView />
   }
   if (!user) {
-    return <Redirect to={"/welcome"} />
+    return <Redirect to={"/welcome"}/>;
   }
 
-  console.log(`DONE LOADING? --> GOING TO SHOW CHATS`, )
+
+  console.log(`DONE LOADING? --> GOING TO SHOW CHATS`, );
   return (
       <div className="row no-gutters fh">
         <div className="col-3 fh">

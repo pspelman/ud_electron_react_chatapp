@@ -49,8 +49,8 @@ export default function Navbar() {
           {user &&
           <Link
             to={'/'}
-            // onClick={() => dispatch(logoutUser())}
-            onClick={() => logOutPage()}
+            onClick={() => dispatch(logoutUser())}
+            // onClick={() => logOutPage()}
             className="btn btn-outline-danger ml-2">Logout
           </Link> }
         </div>

@@ -8,6 +8,13 @@ function createLoginReducer() {
   })
 }
 
+function createLogoutReducer() {
+  return combineReducers({
+    isChecking: createIsFetchingReducer('AUTH_LOGOUT'),
+    error: createErrorReducer('AUTH_LOGOUT')
+  })
+}
+
 
 function createRegisterReducer() {
   return combineReducers({
@@ -24,15 +31,16 @@ function createAuthReducer() {
     console.log(`[AUTH reducer] - ${action.type.toUpperCase()}`)
     switch (action.type) {
       case 'AUTH_ON_ERROR':
-      case 'AUTH_REGISTER_INIT':  // initializing the registration
+      case 'AUTH_REGISTfER_INIT':  // initializing the registration
       case 'AUTH_LOGIN_INIT':  // initializing the authentication
       case 'AUTH_LOGIN_ERROR':
       case 'AUTH_REGISTER_ERROR':
       case 'AUTH_ON_INIT':  // initializing the authentication - there's no user
-      case 'AUTH_LOGOUT_SUCCESS':
         console.log(`[${action.type.toUpperCase()}] (AUTH reducer) --> null`)
         return null  // return null because there's no user
-
+      case 'AUTH_LOGOUT_SUCCESS':
+        console.log(`[${action.type.toUpperCase()}] (AUTH reducer) LOGOUT SUCCESSFUL! NO USER  TURN OFF LOADER --> null`)
+        return null  // return null because there's no user
 
       case 'AUTH_ON_SUCCESS':  // the action comes back with the user data
       case 'AUTH_LOGIN_SUCCESS':  // the action comes back with the user data

@@ -8,7 +8,7 @@ import LoadingView from "../components/shared/LoadingView";
 
 export default function Welcome() {
   const [isLoginView, setIsLogin] = useState(true)
-  const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
+  // const isChecking = useSelector(({auth}) => auth.login.isChecking)  // using redux to see if authentication is in progress
   const isChecking = useSelector(({auth}) => auth.isChecking)  // using redux to see if authentication is in progress
 
   if (isChecking) {  // want to show a loader if we're checking on the auth status
@@ -16,6 +16,7 @@ export default function Welcome() {
     return <LoadingView />
   }
 
+  const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
   if (user) {
     console.log(`we have a user! Going to Home | user: `, JSON.stringify(user))
     return <Redirect to={"/home"} />

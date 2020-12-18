@@ -3,7 +3,8 @@ import {createErrorReducer, createIsFetchingReducer} from "./commonReducer";
 
 function createChatsLoaderReducer() {
   return combineReducers({
-    isLoading: createIsFetchingReducer('CHATS_FETCH'),  // this will send chats fetch init to cause loading to return true
+    // isLoading: createIsFetchingReducer('CHATS_FETCH'),  // this will send chats fetch init to cause loading to return true
+    isLoading: false,
     error: createErrorReducer('CHATS_FETCH'),
   })
 }
@@ -26,6 +27,7 @@ function createChatReducer() {
 
   return combineReducers({
     chats,
+    isLoading: createIsFetchingReducer('CHATS_FETCH'),
     loader: createChatsLoaderReducer(),
   })
 }

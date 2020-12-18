@@ -1,5 +1,8 @@
 const {ipcRenderer, contextBridge} = require('electron')
 const fs = require('fs')
+const { devToolsEnhancer } = require('electron-redux-devtools')
+
+// const devToolsEnhancer = require('electron-redux-devtools')
 
 // want to write to desktop
 // could get the location via IPC
@@ -36,6 +39,7 @@ contextBridge.exposeInMainWorld('e_notification', {
 
 // Note: another way to expose specific methods to the renderer
 contextBridge.exposeInMainWorld('electron', {
+  devToolsEnhancer,
   controlApi: {
     restartApp() {
       console.log(`invoking restart app`, )

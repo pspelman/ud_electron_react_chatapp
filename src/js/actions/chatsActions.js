@@ -20,6 +20,8 @@ import * as api from '../api/chatsApi'
 // }
 
 export const fetchChats = () => dispatch => { // Note: this is a rewritten version of the code above
+  console.log(`going to dispatch CHATS_FETCH_INIT`, )
+
   dispatch({type: 'CHATS_FETCH_INIT'})
   api
     .fetchChats()
