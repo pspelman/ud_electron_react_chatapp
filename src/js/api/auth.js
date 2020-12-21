@@ -32,8 +32,10 @@ export async function registerUser({email, password, username, avatar}) {
   try {
     const {user} = await firebase.auth().createUserWithEmailAndPassword(email, password)
     // after successful user creation, create the profile in the db
-    await createUserProfile({uid: user.uid, username, email, avatar, joinedChats: []})
-    console.log(`calling login user after register`,)
+    // const userProfile = await createUserProfile({uid: user.uid, username, email, avatar, joinedChats: []})
+    const userProfile = {uid: user.uid, username, email, avatar, joinedChats: []}
+    await createUserProfile(userProfile)
+    console.log(`calling login user after register and create`,)
     loginUser({email, password})
     return user
   } catch (error) {
