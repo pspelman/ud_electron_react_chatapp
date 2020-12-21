@@ -17,6 +17,7 @@ import WelcomeView from "./views/Welcome";
 import {listenToAuthChange} from "./actions/authActions";
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
+import BaseLayout from "./layouts/Base";
 
 
 class HomeLink extends React.Component {
@@ -62,7 +63,6 @@ function ChatApp() {
   }
   return (
       <Router>
-        <Navbar/>
         <ContentWrapper>
           <Switch>
             <Route path={"/"} exact={true}>

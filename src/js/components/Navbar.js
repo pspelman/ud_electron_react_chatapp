@@ -1,12 +1,13 @@
 import React from "react";
-import {Link, useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../actions/authActions";
 import ninjaImage from '../ninja_PNG18.png';
+import BackButton from "./shared/BackButton";
 
 
-export default function Navbar() {
-  const history = useHistory()
+export default function Navbar({canGoBack}) {
+  // const history = useHistory()  // used for back button - moved to separate component
   const dispatch = useDispatch()
   const logOutPage = () => {
     dispatch(logoutUser())
@@ -29,9 +30,7 @@ export default function Navbar() {
     <div className="chat-navbar">
       <nav className="chat-navbar-inner">
         <div className="chat-navbar-inner-left">
-          <button onClick={() => history.goBack()}>
-            Go Back
-          </button>
+          {canGoBack && <BackButton/>}
           <Link
             to='/settings'
             className="btn btn-outline-success ml-2">Settings</Link>
@@ -52,7 +51,7 @@ export default function Navbar() {
             onClick={() => dispatch(logoutUser())}
             // onClick={() => logOutPage()}
             className="btn btn-outline-danger ml-2">Logout
-          </Link> }
+          </Link>}
         </div>
       </nav>
     </div>

@@ -5,16 +5,26 @@ import firebase from "firebase";
 export const registerUser = formData => dispatch => {
   dispatch({type: 'AUTH_REGISTER_INIT'})
   api.registerUser(formData)
-    .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS', user: _}))
+    .then(_ => dispatch({type: 'AUTH_REGISTER_SUCCESS', user: _}))  // don't care about the success action, only the errors
     .catch(error => {
       // alert("there was an ERROR during registration: ", JSON.stringify(error))
       console.log(`error with registration: `, error)
       dispatch({type: 'AUTH_REGISTER_ERROR', error: error})
     })
-
 }
 
-
+export const loginUser = formData => dispatch => {
+  console.log(`trying to login: `, formData)
+  dispatch({type: 'AUTH_LOGIN_INIT'})
+  api
+    .login(formData)
+    .then(user => dispatch({type: 'AUTH_ON_SUCCESS', user}))  // return the userProfile as part of the login call
+    .catch(err => {
+      console.log(`error logging in!`, err)
+      dispatch({type: 'AUTH_LOGIN_ERROR', error: err})
+      return err
+    });
+}
 export const listenToAuthChange = () => dispatch => {
   dispatch({type: 'AUTH_ON_INIT'})  // this fires off to initialize authentication
   return api.onAuthStateChanges(async authUser => {
@@ -47,15 +57,3 @@ export const logoutUser = () => dispatch => {
     )
 }
 
-export const loginUser = formData => dispatch => {
-  console.log(`trying to login: `, formData)
-  dispatch({type: 'AUTH_LOGIN_INIT'})
-  api
-    .login(formData)
-    .then(_ => dispatch({type: 'AUTH_ON_SUCCESS', user: _}))
-    .catch(err => {
-      console.log(`error logging in!`, err)
-      dispatch({type: 'AUTH_LOGIN_ERROR', error: err})
-      return err
-    });
-}

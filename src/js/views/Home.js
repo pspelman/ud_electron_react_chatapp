@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {fetchChats} from "../actions/chatsActions"
 import LoadingView from "../components/shared/LoadingView";
 import {Redirect} from "react-router";
+import BaseLayout from "../layouts/Base";
 
 
 // functional component
@@ -19,7 +20,7 @@ export default function Home() {
   const isChecking = useSelector(({chats}) => chats.isLoading)
   const user = useSelector(({auth}) => auth.user)
   console.log(`HOME: user: `, user)
-  console.log(`HOME: \nchatsLoading: ${chatsLoading}\nisChecking: ${isChecking}`, )
+  console.log(`HOME: \nchatsLoading: ${chatsLoading}\nisChecking: ${isChecking}`,)
 
 
   if (user) {
@@ -29,27 +30,29 @@ export default function Home() {
   }
 
   if (isChecking || chatsLoading) {  // want to show a loader if we're checking on the auth status
-    console.log(`AUTH LOADING ${isChecking} | CHATS LOADING ${chatsLoading} | still loading`, )
-    return <LoadingView />
+    console.log(`AUTH LOADING ${isChecking} | CHATS LOADING ${chatsLoading} | still loading`,)
+    return <LoadingView/>
   }
   if (!user) {
     return <Redirect to={"/welcome"}/>;
   }
 
 
-  console.log(`DONE LOADING? --> GOING TO SHOW CHATS`, );
+  console.log(`DONE LOADING? --> GOING TO SHOW CHATS`,);
   return (
+    <BaseLayout>
       <div className="row no-gutters fh">
         <div className="col-3 fh">
           {/*{JSON.stringify(chats)}*/}
-          <JoinedChatsList chats={chats} />
+          <JoinedChatsList chats={chats}/>
         </div>
         <div className="col-9 fh">
           <ViewTitle text={"Choose your channel"}/>
           <div className="container-fluid">
-            <AvailableChatsList chats={chats} />
+            <AvailableChatsList chats={chats}/>
           </div>
         </div>
       </div>
+    </BaseLayout>
   )
 }

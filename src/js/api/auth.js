@@ -45,7 +45,10 @@ export const logout = () => {
   return firebase.auth().signOut()
 }
 
-export const login = async ({email, password}) => firebase.auth().signInWithEmailAndPassword(email, password)  // destructure to get email / pass
+export const login = async ({email, password}) => {
+  const {user} = await firebase.auth().signInWithEmailAndPassword(email, password)  // destructure to get the user from the returned object
+  return await getUserProfile(user.uid)
+}
 
 
 // export const onAuthStateChanges = onAuth => {

@@ -4,6 +4,7 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import {Redirect} from "react-router";
 import LoadingView from "../components/shared/LoadingView";
+import BaseLayout from "../layouts/Base";
 
 
 export default function Welcome() {
