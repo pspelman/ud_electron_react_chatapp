@@ -1,6 +1,7 @@
 const {app, BrowserWindow, Notification, ipcMain} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
+const {REDUX_DEVTOOLS} = require("electron-devtools-installer");
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 const isDev = !app.isPackaged // if this is true, we are in production, else in dev

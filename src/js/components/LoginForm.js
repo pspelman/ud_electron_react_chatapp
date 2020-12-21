@@ -12,9 +12,9 @@ export default function LoginForm() {
   const error = useSelector(({auth}) => auth.login.error)
   const isChecking = useSelector(({auth}) => auth.login.isChecking)
 
-  if (isChecking) {
-    return <LoadingView/>
-  }
+  // if (isChecking) {
+  //   return <LoadingView/>
+  // }
 
   const onSubmit = data => {
     console.log(`trying to do login`, )
