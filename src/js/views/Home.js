@@ -9,11 +9,11 @@ import {useDispatch, useSelector} from "react-redux"
 import {fetchChats} from "../actions/chatsActions"
 import LoadingView from "../components/shared/LoadingView";
 import {Redirect} from "react-router";
-import BaseLayout from "../layouts/Base";
+import {withBaseLayout} from "../layouts/Base";
 
 
 // functional component
-export default function Home() {
+function Home() {
   const dispatch = useDispatch()
   const chats = useSelector(({chats}) => chats.chats)
   const chatsLoading = useSelector(({chats}) => chats.isLoading)
@@ -40,19 +40,19 @@ export default function Home() {
 
   console.log(`DONE LOADING? --> GOING TO SHOW CHATS`,);
   return (
-    <BaseLayout>
-      <div className="row no-gutters fh">
-        <div className="col-3 fh">
-          {/*{JSON.stringify(chats)}*/}
-          <JoinedChatsList chats={chats}/>
-        </div>
-        <div className="col-9 fh">
-          <ViewTitle text={"Choose your channel"}/>
-          <div className="container-fluid">
-            <AvailableChatsList chats={chats}/>
-          </div>
+    <div className="row no-gutters fh">
+      <div className="col-3 fh">
+        {/*{JSON.stringify(chats)}*/}
+        <JoinedChatsList chats={chats}/>
+      </div>
+      <div className="col-9 fh">
+        <ViewTitle text={"Choose your channel"}/>
+        <div className="container-fluid">
+          <AvailableChatsList chats={chats}/>
         </div>
       </div>
-    </BaseLayout>
+    </div>
   )
 }
+
+export default withBaseLayout(Home)

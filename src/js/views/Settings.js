@@ -1,10 +1,10 @@
 import React from "react";
-import BaseLayout from "../layouts/Base";
+import BaseLayout, {withBaseLayout} from "../layouts/Base";
 
-export default function Settings() {
+function Settings() {
   return (
     (
-      <BaseLayout canGoBack>
+      // <BaseLayout canGoBack>
         <div className="centered-view">
           <div className="centered-container">
             <form className="centered-container-form">
@@ -44,8 +44,9 @@ export default function Settings() {
             </form>
           </div>
         </div>
-      </BaseLayout>
+      // </BaseLayout>
     )
-
   )
-};
+}
+
+export default withBaseLayout(Settings, {canGoBack: true})

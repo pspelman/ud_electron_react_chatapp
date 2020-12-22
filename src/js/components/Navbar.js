@@ -6,7 +6,7 @@ import ninjaImage from '../ninja_PNG18.png';
 import BackButton from "./shared/BackButton";
 
 
-export default function Navbar({canGoBack}) {
+export default function Navbar({canGoBack, view}) {
   // const history = useHistory()  // used for back button - moved to separate component
   const dispatch = useDispatch()
   const logOutPage = () => {
@@ -23,6 +23,8 @@ export default function Navbar({canGoBack}) {
   //     className="btn btn-outline-danger ml-2">Logout
   //   </Link>
   // )
+  console.log(`VIEW: `, view)
+
   const message = useSelector(state => {
     return state.message
   })
@@ -31,9 +33,11 @@ export default function Navbar({canGoBack}) {
       <nav className="chat-navbar-inner">
         <div className="chat-navbar-inner-left">
           {canGoBack && <BackButton/>}
+          {view !== "Settings"  &&
           <Link
             to='/settings'
             className="btn btn-outline-success ml-2">Settings</Link>
+          }
         </div>
         MESSAGE {message}
 

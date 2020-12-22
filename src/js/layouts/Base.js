@@ -11,13 +11,15 @@ export default function BaseLayout({children, ...props}) {
 };
 
 
-export const withBaseLayout = (Component) => {
-  return (props) => {
-    return (
-      <>
-        <Navbar />
-        <Component {...props}/>
-      </>
-    )
-  }
+function getDisplayName(Component) {
+  return Component.displayName || Component.name || 'Component'
+}
+
+export const withBaseLayout = (Component, config) => props => {
+  return (
+    <>
+      <Navbar {...config} view={getDisplayName(Component)}/>
+      <Component {...props}/>
+    </>
+  )
 }

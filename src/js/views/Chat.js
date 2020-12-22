@@ -11,17 +11,17 @@ function Chat() {
 
   return (
     // <BaseLayout>
-      <div className="row no-gutters fh">
-        <div className="col-3 fh">
-          <ChatUserList />
-        </div>
-        <div className="col-9 fh">
-          <ViewTitle text={`Joined channel ${id}`} />
-          <ChatMessagesList />
-        </div>
+    <div className="row no-gutters fh">
+      <div className="col-3 fh">
+        <ChatUserList/>
       </div>
+      <div className="col-9 fh">
+        <ViewTitle text={`Joined channel ${id}`}/>
+        <ChatMessagesList/>
+      </div>
+    </div>
     // </BaseLayout>
   )
 }
 
-export default withBaseLayout(Chat)
+export default withBaseLayout(Chat, {canGoBack: true})
