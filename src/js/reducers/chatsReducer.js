@@ -11,7 +11,7 @@ function createChatsLoaderReducer() {
 
 function createChatReducer() {
   const chats = (state = [], action) => {
-    console.log(`[${action.type.toUpperCase()}] (CHATS reducer) --> `, action)
+    // console.log(`[${action.type.toUpperCase()}] (CHATS reducer) --> `, action)
     switch (action.type) {
       case 'CHATS_FETCH_ERROR':
         // return {items: []}

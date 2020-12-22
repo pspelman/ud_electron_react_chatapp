@@ -54,9 +54,22 @@ function ChatApp() {
   const dispatch = useDispatch()
   const isChecking = useSelector(({auth}) => auth.isChecking)
 
+  const alertOnlineStatus = () => {
+    window.alert(navigator.onLine ? 'back online' : 'you\'ve gone offline')
+  }
+
   useEffect(() => {
-    dispatch(listenToAuthChange())
-  }, [dispatch]);
+    const unsubFromAuth = dispatch(listenToAuthChange())  // listenToAuthChange() returns an UNSUB function --> call it for cleanup
+
+    window.addEventListener('online', alertOnlineStatus)
+    window.addEventListener('offline', alertOnlineStatus)
+
+    return function () {
+      unsubFromAuth()
+      window.removeEventListener('online', alertOnlineStatus)
+      window.removeEventListener('offline', alertOnlineStatus)
+    }
+  }, [dispatch])
 
   if (isChecking) {
     return <LoadingView />
