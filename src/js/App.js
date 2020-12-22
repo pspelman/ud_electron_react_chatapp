@@ -18,6 +18,7 @@ import {listenToAuthChange} from "./actions/authActions";
 import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
 import BaseLayout from "./layouts/Base";
+import {listenToConnectionChanges} from "./actions/appActions";
 
 
 class HomeLink extends React.Component {
@@ -53,27 +54,25 @@ function ChatApp() {
   // debugger
   const dispatch = useDispatch()
   const isChecking = useSelector(({auth}) => auth.isChecking)
-
-  const alertOnlineStatus = () => {
-    window.alert(navigator.onLine ? 'back online' : 'you\'ve gone offline')
-  }
+  const isOnline = useSelector(({app}) => app.isOnline)
 
   useEffect(() => {
+    const unsubFromConnectionChanges = dispatch(listenToConnectionChanges())  // rewrote to return the UNSUB function
     const unsubFromAuth = dispatch(listenToAuthChange())  // listenToAuthChange() returns an UNSUB function --> call it for cleanup
-
-    window.addEventListener('online', alertOnlineStatus)
-    window.addEventListener('offline', alertOnlineStatus)
 
     return function () {
       unsubFromAuth()
-      window.removeEventListener('online', alertOnlineStatus)
-      window.removeEventListener('offline', alertOnlineStatus)
+      unsubFromConnectionChanges()
     }
   }, [dispatch])
 
   if (isChecking) {
     return <LoadingView />
   }
+  if (!isOnline) {
+    return <LoadingView message={"Offline... waiting to reconnect..."}/>
+  }
+
   return (
       <Router>
         <ContentWrapper>
@@ -103,7 +102,7 @@ function ChatApp() {
           </Switch>
         </ContentWrapper>
       </Router>
-  )
+  );
 }
 
 export default function App() {
