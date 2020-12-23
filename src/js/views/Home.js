@@ -10,12 +10,18 @@ import {fetchChats} from "../actions/chatsActions"
 import LoadingView from "../components/shared/LoadingView";
 import {Redirect} from "react-router";
 import {withBaseLayout} from "../layouts/Base";
+import AppNotification from "../utils/notifications";
+
 
 
 // functional component
 function Home() {
   const dispatch = useDispatch()
   const chats = useSelector(({chats}) => chats.chats)
+  useEffect(() => {
+    AppNotification.setup()
+  }, [dispatch]);
+
   const chatsLoading = useSelector(({chats}) => chats.isLoading)
   const isChecking = useSelector(({chats}) => chats.isLoading)
   const user = useSelector(({auth}) => auth.user)
