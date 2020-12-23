@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 import chatReducer from "../reducers/chatsReducer";
 import authReducer from "../reducers/authReducer";
 import appReducer from "../reducers/appReducer";
+import appMiddleware from "./middlewares/appMiddleware";
 // import {devToolsEnhancer} from "electron-redux-devtools";
 // import { devToolsEnhancer } from 'electron-redux-devtools';
 
@@ -12,6 +13,7 @@ export default function configureStore() {
 
   const middlewares = [
     // window.electron.devToolsEnhancer,
+    appMiddleware,
     thunkMiddleware,
     // devToolsEnhancer(),
   ]
