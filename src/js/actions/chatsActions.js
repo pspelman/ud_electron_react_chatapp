@@ -62,6 +62,20 @@ export const fetchChats = () => async (dispatch, getState) => { // Note: this is
   //   })
 }
 
+export const joinChat = (userId, chat) => dispatch =>
+  api.joinChat(userId, chat.id)
+    .then(chatId => {
+      console.log(`successfully joined chat `, chatId)
+      dispatch({type: 'CHATS_JOIN_SUCCESS'})
+    })
+// export const joinChat = (chatId, getState) => async dispatch => {
+//   const {user} = getState().auth
+//
+//   // todo: maybe check if there are permissions to join
+//   console.log(`trying to join userId ${user.id} to chat `, chatId)
+//
+// }
+
 export const createChat = (formData, userId) => async dispatch => {
   const newChat = {...formData}  // need  to pass the user ID
   // get the user profile for the given ID

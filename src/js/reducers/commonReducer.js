@@ -22,6 +22,8 @@ export const createIsFetchingReducer = actionType => {
         return true
       case `${actionType}_SUCCESS`:
         return false
+      case `${actionType}_RESTART`:
+        return false
       case `${actionType}_ERROR`:
         return false
       default:
