@@ -11,6 +11,7 @@ import LoadingView from "../components/shared/LoadingView";
 import {Redirect} from "react-router";
 import {withBaseLayout} from "../layouts/Base";
 import AppNotification from "../utils/notifications";
+import {Link} from "react-router-dom";
 
 
 
@@ -52,7 +53,9 @@ function Home() {
         <JoinedChatsList chats={chats}/>
       </div>
       <div className="col-9 fh">
-        <ViewTitle text={"Choose your channel"}/>
+        <ViewTitle text={"Choose your channel"}>
+          <Link className={"btn btn-outline-primary"} to={'/chatCreate'}>New</Link>
+        </ViewTitle>
         <div className="container-fluid">
           <AvailableChatsList chats={chats}/>
         </div>

@@ -20,5 +20,13 @@ export const fetchChats = () => {
     //   return extractSnapshot(snapshot)
     //
     // })
+}
 
+export const createChat = chatData => {
+  console.log(`going to create the chat in the API: `, chatData)
+  // return async () => await db
+  return db
+    .collection('chats')  // reference the collection I want to access
+    .add(chatData)  // provide the data I want to add
+    .then(docRef => docRef.id)
 }

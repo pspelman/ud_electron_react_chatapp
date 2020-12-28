@@ -28,6 +28,7 @@
     "css-loader": "^5.0.1",
     "dotenv-webpack": "^6.0.0",
     "electron-window-state": "^5.0.3",
+    "faker": "^5.1.0",
     "firebase": "^8.1.2",
     "img-loader": "^3.0.2",
     "react": "^17.0.1",

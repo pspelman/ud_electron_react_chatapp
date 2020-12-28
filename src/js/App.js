@@ -19,6 +19,7 @@ import StoreProvider from "./store/StoreProvider";
 import LoadingView from "./components/shared/LoadingView";
 import BaseLayout from "./layouts/Base";
 import {listenToConnectionChanges} from "./actions/appActions";
+import ChatCreateView from "./views/ChatCreate";
 
 
 class HomeLink extends React.Component {
@@ -83,6 +84,10 @@ function ChatApp() {
 
             <AuthRoute path={"/home"}>
               <HomeView/>
+            </AuthRoute>
+
+            <AuthRoute path={"/chatCreate"}>
+              <ChatCreateView />
             </AuthRoute>
 
             <AuthRoute path={"/settings"}>
