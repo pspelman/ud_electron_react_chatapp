@@ -18,8 +18,10 @@ function createChatReducer() {
       case 'CHATS_FETCH_ERROR':
         // return {items: []}
         return []
+      case 'CHATS_JOIN_SUCCESS':
+        return [...state, action.chat]
       case 'CHATS_FETCH_SUCCESS':
-        console.log(`got the chats`, action.joined)
+        // check for the chat that was joined and remove it from available
         return action.joined  // this means the action that comes in is going to have a chats objects
       default:
         return state;
@@ -36,6 +38,10 @@ function createChatReducer() {
       case 'CHATS_FETCH_SUCCESS':
         console.log(`got the available chats: `, action.available)
         return action.available  // this means the action that comes in is going to have a chats objects
+      case 'CHATS_JOIN_SUCCESS':
+        console.log(`got the available chats: `, action.available)
+        return state.filter(chat => chat.id !== action.chat.id)
+        // return action.available  // this means the action that comes in is going to have a chats objects
       default:
         return state;
     }

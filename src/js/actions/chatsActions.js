@@ -66,7 +66,7 @@ export const joinChat = (userId, chat) => dispatch =>
   api.joinChat(userId, chat.id)
     .then(chatId => {
       console.log(`successfully joined chat `, chatId)
-      dispatch({type: 'CHATS_JOIN_SUCCESS'})
+      dispatch({type: 'CHATS_JOIN_SUCCESS', chat})
     })
 // export const joinChat = (chatId, getState) => async dispatch => {
 //   const {user} = getState().auth
