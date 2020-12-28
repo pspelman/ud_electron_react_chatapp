@@ -49,6 +49,7 @@ export const logoutUser = () => dispatch => {
     .logout()
     .then(_ => {
       dispatch({type: 'AUTH_LOGOUT_SUCCESS'})
+      dispatch({type: 'CHATS_FETCH_RESTART'})
     })
     .catch(err => {
       console.log(`error logging out: `, err)

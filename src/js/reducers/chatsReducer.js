@@ -9,9 +9,12 @@ function createChatsLoaderReducer() {
   })
 }
 
+
 function createChatReducer() {
   const joined = (state = [], action) => {
     switch (action.type) {
+      case 'CHATS_FETCH_RESTART':
+        return []
       case 'CHATS_FETCH_ERROR':
         // return {items: []}
         return []
@@ -25,6 +28,8 @@ function createChatReducer() {
 
   const available = (state = [], action) => {
     switch (action.type) {
+      case 'CHATS_FETCH_RESTART':
+        return []
       case 'CHATS_FETCH_ERROR':
         // return {items: []}
         return []
