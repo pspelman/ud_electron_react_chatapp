@@ -14,11 +14,11 @@ import AppNotification from "../utils/notifications";
 import {Link} from "react-router-dom";
 
 
-
 // functional component
 function Home() {
   const dispatch = useDispatch()
-  const chats = useSelector(({chats}) => chats.chats)
+  const joinedChats = useSelector(({chats}) => chats.joined)
+  const availableChats = useSelector(({chats}) => chats.available)
   useEffect(() => {
     AppNotification.setup()
   }, [dispatch]);
@@ -28,6 +28,8 @@ function Home() {
   const user = useSelector(({auth}) => auth.user)
   console.log(`HOME: user: `, user)
   console.log(`HOME: \nchatsLoading: ${chatsLoading}\nisChecking: ${isChecking}`,)
+
+  // add the joined / available chats
 
 
   if (user) {
@@ -49,15 +51,15 @@ function Home() {
   return (
     <div className="row no-gutters fh">
       <div className="col-3 fh">
-        {/*{JSON.stringify(chats)}*/}
-        <JoinedChatsList chats={chats}/>
+        {/*<JoinedChatsList chats={chats}/>*/}
+        <JoinedChatsList chats={joinedChats}/>
       </div>
       <div className="col-9 fh">
         <ViewTitle text={"Choose your channel"}>
           <Link className={"btn btn-outline-primary"} to={'/chatCreate'}>New</Link>
         </ViewTitle>
         <div className="container-fluid">
-          <AvailableChatsList chats={chats}/>
+          <AvailableChatsList chats={availableChats}/>
         </div>
       </div>
     </div>

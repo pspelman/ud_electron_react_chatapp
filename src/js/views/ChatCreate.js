@@ -3,23 +3,27 @@ import {withBaseLayout} from "../layouts/Base";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import {useForm} from "react-hook-form";
-import {createChat} from "../actions/chatsActions";
-import {useHistory} from "react-router-dom";
 const faker = require('faker');
 import {useDispatch, useSelector} from "react-redux";
+
+import {createChat} from "../actions/chatsActions";
+import {useHistory} from "react-router-dom";
+
 
 
 // name -> input, description -> textarea, image -> input
 function ChatCreate() {
-  const {register, handleSubmit} = useForm()
-  const user = useSelector(({auth}) => auth.user)
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const { register, handleSubmit } = useForm();
+  const user = useSelector(({auth}) => auth.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = data => {
-    dispatch(createChat(data, user.uid))  // this should dispatch the action to create a new chat with the current userID
+    dispatch(createChat(data, user.uid))
+    setTimeout(() => {
+      history.push('/home')
+    }, 200)
       // .then(_ => history.push('/home'))
-    history.push('/home')
   }
 
 

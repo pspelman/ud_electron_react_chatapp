@@ -10,23 +10,50 @@ function createChatsLoaderReducer() {
 }
 
 function createChatReducer() {
-  const chats = (state = [], action) => {
-    // console.log(`[${action.type.toUpperCase()}] (CHATS reducer) --> `, action)
+  const joined = (state = [], action) => {
     switch (action.type) {
       case 'CHATS_FETCH_ERROR':
         // return {items: []}
         return []
       case 'CHATS_FETCH_SUCCESS':
-        console.log(`got the chats`, action.chats)
-        // return {items: action.chats}  // this means the action that comes in is going to have a chats objects
-        return action.chats  // this means the action that comes in is going to have a chats objects
+        console.log(`got the chats`, action.joined)
+        return action.joined  // this means the action that comes in is going to have a chats objects
       default:
         return state;
     }
-  };
+  }
+
+  const available = (state = [], action) => {
+    switch (action.type) {
+      case 'CHATS_FETCH_ERROR':
+        // return {items: []}
+        return []
+      case 'CHATS_FETCH_SUCCESS':
+        console.log(`got the available chats: `, action.available)
+        return action.available  // this means the action that comes in is going to have a chats objects
+      default:
+        return state;
+    }
+  }
+
+  // const chats = (state = [], action) => {
+  //   // console.log(`[${action.type.toUpperCase()}] (CHATS reducer) --> `, action)
+  //   switch (action.type) {
+  //     case 'CHATS_FETCH_ERROR':
+  //       // return {items: []}
+  //       return []
+  //     case 'CHATS_FETCH_SUCCESS':
+  //       console.log(`got the chats`, action.chats)
+  //       // return {items: action.chats}  // this means the action that comes in is going to have a chats objects
+  //       return action.chats  // this means the action that comes in is going to have a chats objects
+  //     default:
+  //       return state;
+  //   }
+  // };
 
   return combineReducers({
-    chats,
+    available,
+    joined,
     isLoading: createIsFetchingReducer('CHATS_FETCH'),
     loader: createChatsLoaderReducer(),
   })

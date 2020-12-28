@@ -19,7 +19,7 @@ export default function Welcome() {
 
   const user = useSelector(({auth}) => auth.user)  // using redux to check for the user
   if (user) {
-    console.log(`we have a user! Going to Home | user: `, JSON.stringify(user))
+    // console.log(`we have a user! Going to Home | user: `, JSON.stringify(user))
     return <Redirect to={"/home"} />
   }
 
