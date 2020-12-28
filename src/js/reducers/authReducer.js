@@ -44,7 +44,7 @@ function createAuthReducer() {
       // case 'AUTH_LOGIN_SUCCESS':  // the action comes back with the user data
       // case 'AUTH_REGISTER_SUCCESS':
         console.log(`[${action.type.toUpperCase()}] (AUTH reducer) --> ${action.user}`)
-        return action.user
+        return action.user || state
 
       default:
         return state

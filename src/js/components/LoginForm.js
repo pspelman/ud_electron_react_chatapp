@@ -29,7 +29,8 @@ export default function LoginForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            defaultValue={"phil@phil.com"}
+            // defaultValue={"phil@phil.com"}
+            defaultValue={"stuff@phil.com"}
             ref={register}
             name="email"
             type="email"
