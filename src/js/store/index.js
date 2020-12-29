@@ -13,8 +13,8 @@ export default function configureStore() {
 
   const middlewares = [
     // window.electron.devToolsEnhancer,
-    appMiddleware,
     thunkMiddleware,
+    appMiddleware,
     // devToolsEnhancer(),
   ]
 
@@ -25,12 +25,10 @@ export default function configureStore() {
   //     data2: 'some more testing data',
   //   }
   // }, applyMiddleware(...middlewares))
-  const store = createStore(
+  return createStore(
     combineReducers({  // Note: hook up the store, reducer, and action handlers (middleware)
       chats: chatReducer,
       auth: authReducer,
       app: appReducer,
     }), applyMiddleware(...middlewares))
-
-  return store
 }

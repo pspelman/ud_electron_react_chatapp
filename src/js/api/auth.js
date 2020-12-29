@@ -21,7 +21,7 @@ export const getUserProfile = uid =>
     .get()
     .then((snapshot) => {
       let newData = snapshot.data()
-      console.log(`doing something with snapshot data: `, newData )
+      // console.log(`doing something with snapshot data: `, newData )
       return newData
     }).catch(function(error) {
     console.log(`Error getting document: `, error)

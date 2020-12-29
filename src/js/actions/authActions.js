@@ -29,7 +29,7 @@ export const listenToAuthChange = () => dispatch => {
   dispatch({type: 'AUTH_ON_INIT'})  // this fires off to initialize authentication
   return api.onAuthStateChanges(async authUser => {
     if (authUser) {
-      console.log(`trying to get the user for UID: `, authUser.uid)
+      // console.log(`trying to get the user for UID: `, authUser.uid)
       const userProfile = await api.getUserProfile(authUser.uid)  // this will get the userProfile from the DB
       dispatch({type: 'AUTH_ON_SUCCESS', user: userProfile})
     } else {

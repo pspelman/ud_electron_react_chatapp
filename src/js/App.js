@@ -1,11 +1,6 @@
 import React, {useEffect} from 'react'
 import HomeView from './views/Home'
-import {
-  Redirect,
-  HashRouter as Router,
-  Switch,
-  Route, Link, useHistory, useParams
-} from 'react-router-dom'
+import {checkUserConnection} from "./actions/connectionActions"
 import Navbar from "./components/Navbar";
 import Settings from "./views/Settings";
 import Login from "./views/Welcome";
@@ -20,7 +15,12 @@ import LoadingView from "./components/shared/LoadingView";
 import BaseLayout from "./layouts/Base";
 import {listenToConnectionChanges} from "./actions/appActions";
 import ChatCreateView from "./views/ChatCreate";
-
+import {
+  Redirect,
+  HashRouter as Router,
+  Switch,
+  Route, Link, useHistory, useParams
+} from 'react-router-dom'
 
 class HomeLink extends React.Component {
   render() {
@@ -51,11 +51,14 @@ function AuthRoute({children, ...rest}) {
 
 const ContentWrapper = ({children}) => <div className="content-wrapper">{children}</div>
 
+
+
 function ChatApp() {
   // debugger
   const dispatch = useDispatch()
   const isChecking = useSelector(({auth}) => auth.isChecking)
   const isOnline = useSelector(({app}) => app.isOnline)
+  const user = useSelector(({auth}) => auth.user)
 
   useEffect(() => {
     const unsubFromConnectionChanges = dispatch(listenToConnectionChanges())  // rewrote to return the UNSUB function
@@ -67,11 +70,23 @@ function ChatApp() {
     }
   }, [dispatch])
 
-  if (isChecking) {
-    return <LoadingView />
-  }
+  useEffect(() => {
+    let unsubFromUserConnection;
+    if (user?.uid) {
+      unsubFromUserConnection = dispatch(checkUserConnection(user.uid));
+    }
+
+    return () => {
+      unsubFromUserConnection && unsubFromUserConnection();
+    }
+  }, [dispatch, user])
+
+
   if (!isOnline) {
     return <LoadingView message={"Offline... waiting to reconnect..."}/>
+  }
+  if (isChecking) {
+    return <LoadingView />
   }
 
   return (
