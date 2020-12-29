@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {Link, useParams} from "react-router-dom";
 import ChatUserList from "../components/ChatUserList";
 import ChatMessagesList from "../components/ChatMessagesList";
@@ -10,6 +10,7 @@ import {subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
 // export default function Chat() {
 function Chat() {
   const {id} = useParams()
+  const userStatusListeners = useRef({})  // need to keep the value between renders, so we use useRef to keep the value between renders
   const dispatch = useDispatch()
   const activeChat = useSelector(({chats}) => chats.activeChats[id])
   const joinedUsers = activeChat?.joinedUsers
@@ -17,7 +18,8 @@ function Chat() {
   useEffect(() => {  // this will subscribe to the chat when this chat view is created
     const unsubFromChat = dispatch(subscribeToChat(id))
     return () => {
-      unsubFromChat()
+      unsubFromChat();
+      unsubFromJoinedUsers();
     }
   }, [])
 
@@ -27,9 +29,18 @@ function Chat() {
 
   const subscribeToJoinedUsers = (jUsers) => {
     jUsers.forEach(user => {
-      dispatch(subscribeToProfile(user.uid))
+      if (!userStatusListeners.current[user.uid]) {  // if the listener isn't there yet
+        userStatusListeners.current[user.uid] = dispatch(subscribeToProfile(user.uid));
+      }
     })
   }
+
+  const unsubFromJoinedUsers = () => {
+    Object.keys(userStatusListeners.current)
+      .forEach(id => userStatusListeners.current[id]())  // this will execute the callback function for each of the IDs
+  }
+
+
   return (
     // <BaseLayout>
     <div className="row no-gutters fh">

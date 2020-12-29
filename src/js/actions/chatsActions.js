@@ -29,11 +29,11 @@ export const fetchChats = () => async (dispatch, getState) => { // Note: this is
 
   chats.forEach(chat => {
     chat.joinedUsers = chat.joinedUsers ? chat.joinedUsers.map(user => user.id) : []  // condense the joinedUser info into a list of Ids on the chat object
-    console.log(`joined user ids: `, chat.joinedUsers)
+    // console.log(`joined user ids: `, chat.joinedUsers)
   })
 
   // now we need a sorting function
-  console.log(`going to process chats: k`, chats)
+  // console.log(`going to process chats: k`, chats)
 
   const sortedChats = chats.reduce((processedChats, chat) => {
     // FIRST check if the currently logged in user is included in the chat
@@ -103,6 +103,22 @@ export const createChat = (formData, userId) => async dispatch => {
   //   })
 }
 
+// export const subscribeToChat = chatId => dispatch =>
+//   api
+//     .subscribeToChat(chatId, async chat => {
+//       const joinedUsers = await Promise.all(
+//         chat.joinedUsers.map(async userRef => {
+//           const userSnapshot = await userRef.get()
+//           return userSnapshot.data()
+//         })
+//       )
+//       console.log(`Joined users: `, joinedUsers)
+//       chat.joinedUsers = joinedUsers  // adding the joined users to the chat object
+//
+//       // Note: I want to create a new chat object for storing my chats by ID
+//       console.log(`SUBSCRIBED TO CHAT: `, chatId)
+//       dispatch({'type': 'CHATS_SET_ACTIVE_CHAT', chat})
+//     })
 export const subscribeToChat = chatId => dispatch =>
   api
     .subscribeToChat(chatId, async chat => {
@@ -128,6 +144,13 @@ export const subscribeToProfile = uid => dispatch =>
       console.log(`USER Profile change detected! `, user)
       dispatch({'type': 'CHATS_UPDATE_USER_STATE', user})  // handle the updated user state
     })
+
+// export const subscribeToProfile = uid => dispatch =>
+//   api
+//     .subscribeToProfile(uid, user => {
+//       console.log(`USER Profile change detected! `, user)
+//       dispatch({'type': 'CHATS_UPDATE_USER_STATE', user})  // handle the updated user state
+//     })
 
 // export const createChat = (formData, userId) => async dispatch => {
 //   const newChat = {...formData};
