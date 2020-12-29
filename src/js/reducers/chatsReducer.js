@@ -1,5 +1,7 @@
-import {combineReducers} from "redux";
-import {createErrorReducer, createIsFetchingReducer} from "./commonReducer";
+import {combineReducers} from "redux"
+import {createErrorReducer, createIsFetchingReducer} from "./commonReducer"
+import {createReducer} from "@reduxjs/toolkit"
+
 
 function createChatsLoaderReducer() {
   return combineReducers({
@@ -41,7 +43,7 @@ function createChatReducer() {
       case 'CHATS_JOIN_SUCCESS':
         console.log(`got the available chats: `, action.available)
         return state.filter(chat => chat.id !== action.chat.id)
-        // return action.available  // this means the action that comes in is going to have a chats objects
+      // return action.available  // this means the action that comes in is going to have a chats objects
       default:
         return state;
     }
@@ -61,10 +63,18 @@ function createChatReducer() {
   //       return state;
   //   }
   // };
+  const activeChats = createReducer({}, {
+
+    'CHATS_SET_ACTIVE_CHAT': (state, action) => {  // default state is empty object
+      const {chat} = action
+      state[chat.id] = chat;
+    }
+  })
 
   return combineReducers({
     available,
     joined,
+    activeChats,
     isLoading: createIsFetchingReducer('CHATS_FETCH'),
     loader: createChatsLoaderReducer(),
   })
