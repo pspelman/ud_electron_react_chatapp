@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../actions/authActions";
 import LoadingView from "./shared/LoadingView";
 
+const faker = require('faker');
 
 
 export default function RegisterForm() {
@@ -27,48 +28,48 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            defaultValue={"stuff@phil.com"}
+            defaultValue={`${faker.name.firstName().toLowerCase()}@phil.com`}
             ref={register}
             type="email"
             className="form-control"
             name="email"
             id="email"
-            aria-describedby="emailHelp" />
+            aria-describedby="emailHelp"/>
           <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
-            defaultValue={"stuff"}
+            defaultValue={faker.internet.userName()}
             ref={register}
             type="text"
             name="username"
             className="form-control"
             id="username"
-            aria-describedby="emailHelp" />
+            aria-describedby="emailHelp"/>
         </div>
         <div className="form-group">
           <label htmlFor="avatar">Avatar</label>
           <input
-            defaultValue={"stuff"}
+            defaultValue={faker.image.imageUrl()}
             ref={register}
             type="text"
             name="avatar"
             className="form-control"
             id="avatar"
-            aria-describedby="emailHelp" />
+            aria-describedby="emailHelp"/>
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            defaultValue={"1234"}
+            defaultValue={"123456"}
             ref={register}
             name="password"
             type="password"
             className="form-control"
-            id="password" />
+            id="password"/>
         </div>
-        { error && <div className="alert alert-danger small">{error}</div>}
+        {error && <div className="alert alert-danger small">{error}</div>}
         <button type="submit" className="btn btn-outline-primary">Register</button>
       </div>
     </form>

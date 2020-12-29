@@ -21,7 +21,10 @@ function createChatReducer() {
         // return {items: []}
         return []
       case 'CHATS_JOIN_SUCCESS':
-        return [...state, action.chat]
+        if (!action.createdNew) {
+          return [...state, action.chat];
+        }
+        return [...state]
       case 'CHATS_FETCH_SUCCESS':
         // check for the chat that was joined and remove it from available
         return action.joined  // this means the action that comes in is going to have a chats objects

@@ -42,7 +42,8 @@ export default function Navbar({canGoBack, view}) {
         MESSAGE {message}
 
         <div className="chat-navbar-inner-right">
-          {user ? <img src={ninjaImage} className={"avatar mr-2"} alt=""/> : ''}
+          {/*{user ? <img src={ninjaImage} className={"avatar mr-2"} alt=""/> : ''}*/}
+          {user ? <img src={user.avatar} className={"avatar mr-2"} alt=""/> : ''}
           <span className="logged-in-user">Hi {user ? user.username : 'User'}</span>
 
           {/*<Link*/}

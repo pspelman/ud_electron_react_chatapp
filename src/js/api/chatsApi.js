@@ -52,3 +52,9 @@ export const subscribeToChat = (chatId, onSubscribe) =>  // onSubcribe is the ca
       const chat = {id: snapshot.id, ...snapshot.data()}  // get the id and the rest of the chat data into an object
       onSubscribe(chat)
     })
+
+export const subscribeToProfile = (uid, onSubscribe) =>  // onSubcribe is the callback function for handling subscription updates for this specific chat
+  db
+    .collection(`userProfiles`)
+    .doc(uid)
+    .onSnapshot(snapshot => onSubscribe(snapshot.data()))

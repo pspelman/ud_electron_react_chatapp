@@ -28,7 +28,7 @@ export const fetchChats = () => async (dispatch, getState) => { // Note: this is
   const chats = await api.fetchChats()
 
   chats.forEach(chat => {
-    chat.joinedUsers = chat.joinedUsers.map(user => user.id)  // condense the joinedUser info into a list of Ids on the chat object
+    chat.joinedUsers = chat.joinedUsers ? chat.joinedUsers.map(user => user.id) : []  // condense the joinedUser info into a list of Ids on the chat object
     console.log(`joined user ids: `, chat.joinedUsers)
   })
 
@@ -86,7 +86,7 @@ export const createChat = (formData, userId) => async dispatch => {
   dispatch({type: "CHATS_CREATE_SUCCESS"})
 
   await api.joinChat(userId, chatId)  // now use the action to update the DB for this user to join the chat
-  dispatch({type: "CHATS_JOIN_SUCCESS", chat: {...newChat, id: chatId}})
+  dispatch({type: "CHATS_JOIN_SUCCESS", chat: {...newChat, id: chatId}, createdNew: true})
   return chatId
   // return api  // need to add admin and joinedUsers to formData
   //   .createChat(newChat) // this will return the ID of the chat --> chain the ID
@@ -122,11 +122,18 @@ export const subscribeToChat = chatId => dispatch =>
 
     })
 
+export const subscribeToProfile = uid => dispatch =>
+  api
+    .subscribeToProfile(uid, user => {
+      console.log(`USER Profile change detected! `, user)
+      dispatch({'type': 'CHATS_UPDATE_USER_STATE', user})  // handle the updated user state
+    })
+
 // export const createChat = (formData, userId) => async dispatch => {
 //   const newChat = {...formData};
 //   newChat.admin = db.doc(`profiles/${userId}`);
 //
-//   const chatId = await api.createChat(newChat);
+//   const userId = await api.createChat(newChat);
 //   dispatch({type: 'CHATS_CREATE_SUCCESS'});
 //   await api.joinChat(userId, chatId)
 //   dispatch({type: 'CHATS_JOIN_SUCCESS', chat: {...newChat, id: chatId}});

@@ -59,7 +59,7 @@ function Home() {
           <Link className={"btn btn-outline-primary"} to={'/chatCreate'}>New</Link>
         </ViewTitle>
         <div className="container-fluid">
-          <AvailableChatsList chats={availableChats}/>
+          <AvailableChatsList chats={availableChats?availableChats:[]}/>
         </div>
       </div>
     </div>
