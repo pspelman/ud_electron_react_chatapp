@@ -88,9 +88,6 @@ export const createChat = (formData, userId) => async dispatch => {
   await api.joinChat(userId, chatId)  // now use the action to update the DB for this user to join the chat
   dispatch({type: "CHATS_JOIN_SUCCESS", chat: {...newChat, id: chatId}})
   return chatId
-
-
-
   // return api  // need to add admin and joinedUsers to formData
   //   .createChat(newChat) // this will return the ID of the chat --> chain the ID
   //   .then(_ => {
@@ -105,6 +102,14 @@ export const createChat = (formData, userId) => async dispatch => {
   //     dispatch({type: 'CHATS_CREATE_ERROR', error: err})
   //   })
 }
+
+export const subscribeToChat = chatId => dispatch =>
+  api
+    .subscribeToChat(chatId, chat => {
+      console.log(`SUBSCRIBED TO CHAT: `, chatId)
+      dispatch({'type': 'CHATS_SET_ACTIVE_CHAT', chat})
+
+    })
 
 // export const createChat = (formData, userId) => async dispatch => {
 //   const newChat = {...formData};

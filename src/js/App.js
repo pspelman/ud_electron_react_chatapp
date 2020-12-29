@@ -9,7 +9,7 @@ import {
 import Navbar from "./components/Navbar";
 import Settings from "./views/Settings";
 import Login from "./views/Welcome";
-import Chat from "./views/Chat";
+import ChatView from "./views/Chat";
 import {createStore} from "redux";
 import configureStore from "./store";
 import {Provider, useDispatch, useSelector} from 'react-redux'
@@ -94,8 +94,9 @@ function ChatApp() {
               <Settings/>
             </AuthRoute>
 
-            <AuthRoute path={"/chat/:id"}>  {/* Note: needed to add the :id to the route for it to get grabbed from the params*/}
-              <Chat/>
+            {/*Note: needed to add the :id to the route for it to get grabbed from the params*/}
+            <AuthRoute path="/chat/:id">
+              <ChatView />
             </AuthRoute>
 
             <Route path={"/welcome"}>
