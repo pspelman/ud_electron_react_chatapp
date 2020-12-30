@@ -138,11 +138,11 @@ export const subscribeToChat = chatId => dispatch =>
 
     })
 
-export const subscribeToProfile = uid => dispatch =>
+export const subscribeToProfile = (uid, chatId) => dispatch =>
   api
     .subscribeToProfile(uid, user => {
       console.log(`USER Profile change detected! `, user)
-      dispatch({'type': 'CHATS_UPDATE_USER_STATE', user})  // handle the updated user state
+      dispatch({'type': 'CHATS_UPDATE_USER_STATE', user, chatId})  // handle the updated user state, pass on chatId
     })
 
 // export const subscribeToProfile = uid => dispatch =>

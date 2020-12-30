@@ -587,3 +587,18 @@ ul {
   height: 50px;
   border-radius: 50%;
 }
+
+
+.status-box {
+  &-online {
+    background: #9ec94a;
+    height: 20px;
+    width: 20px;
+  }
+  &-offline {
+    background-color: red;
+    height: 20px;
+    width: 20px;
+  }
+}
+

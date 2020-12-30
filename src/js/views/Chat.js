@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useCallback} from 'react'
 import {Link, useParams} from "react-router-dom";
 import ChatUserList from "../components/ChatUserList";
 import ChatMessagesList from "../components/ChatMessagesList";
@@ -6,17 +6,18 @@ import ViewTitle from "../components/shared/ViewTitle";
 import {withBaseLayout} from "../layouts/Base"
 import {useDispatch, useSelector} from "react-redux";
 import {subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
+import LoadingView from "../components/shared/LoadingView";
 
 // export default function Chat() {
 function Chat() {
-  const {id} = useParams()
+  const {id: chatId} = useParams()
   const userStatusListeners = useRef({})  // need to keep the value between renders, so we use useRef to keep the value between renders
   const dispatch = useDispatch()
-  const activeChat = useSelector(({chats}) => chats.activeChats[id])
+  const activeChat = useSelector(({chats}) => chats.activeChats[chatId])
   const joinedUsers = activeChat?.joinedUsers
 
   useEffect(() => {  // this will subscribe to the chat when this chat view is created
-    const unsubFromChat = dispatch(subscribeToChat(id))
+    const unsubFromChat = dispatch(subscribeToChat(chatId))
     return () => {
       unsubFromChat();
       unsubFromJoinedUsers();
@@ -27,21 +28,27 @@ function Chat() {
     joinedUsers && subscribeToJoinedUsers(joinedUsers)
   }, [joinedUsers])
 
-  const subscribeToJoinedUsers = (jUsers) => {
+  const subscribeToJoinedUsers = useCallback(jUsers => {
     jUsers.forEach(user => {
       if (!userStatusListeners.current[user.uid]) {  // if the listener isn't there yet
-        userStatusListeners.current[user.uid] = dispatch(subscribeToProfile(user.uid));
+        userStatusListeners.current[user.uid] = dispatch(subscribeToProfile(user.uid, chatId));
       }
     })
-  }
+  },[dispatch, chatId])
 
-  const unsubFromJoinedUsers = () => {
+  const unsubFromJoinedUsers = useCallback(() => {
     Object.keys(userStatusListeners.current)
       .forEach(id => userStatusListeners.current[id]())  // this will execute the callback function for each of the IDs
+  }, [userStatusListeners.current])
+
+  if (!activeChat?.id) {
+    return <LoadingView message={"loading chat..."}/>
   }
 
 
-  return (
+
+
+      return (
     // <BaseLayout>
     <div className="row no-gutters fh">
       <div className="col-3 fh">
@@ -53,7 +60,7 @@ function Chat() {
       </div>
     </div>
     // </BaseLayout>
-  )
+  );
 }
 
 export default withBaseLayout(Chat, {canGoBack: true})

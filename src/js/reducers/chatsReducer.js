@@ -71,6 +71,17 @@ function createChatReducer() {
     'CHATS_SET_ACTIVE_CHAT': (state, action) => {  // default state is empty object
       const {chat} = action
       state[chat.id] = chat;
+    },
+    'CHATS_UPDATE_USER_STATE': (state, action) => {
+      const {user, chatId} = action  // extract from the action
+      const joinedUsers = state[chatId].joinedUsers
+      const indexOfUser = joinedUsers.findIndex(jUser => jUser.uid === user.uid)  // identify where in the list the user is
+
+      if (indexOfUser < 0) return state  // the user is not found in joinedUsers
+      // note: the line below was enabled when a weird bug happened where the logged in user wouldn't show as online
+      if(joinedUsers[indexOfUser].state === user.state) return state  // the state has not changed
+      joinedUsers[indexOfUser].state = user.state  // the state has changed --> update the state of the user
+
     }
   })
 
