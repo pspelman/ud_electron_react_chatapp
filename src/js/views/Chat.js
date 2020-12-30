@@ -5,7 +5,7 @@ import ChatMessagesList from "../components/ChatMessagesList";
 import ViewTitle from "../components/shared/ViewTitle";
 import {withBaseLayout} from "../layouts/Base"
 import {useDispatch, useSelector} from "react-redux";
-import {subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
+import {sendChatMessage, subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
 import LoadingView from "../components/shared/LoadingView";
 import Messenger from "../components/Messenger";
 
@@ -16,6 +16,12 @@ function Chat() {
   const dispatch = useDispatch()
   const activeChat = useSelector(({chats}) => chats.activeChats[chatId])
   const joinedUsers = activeChat?.joinedUsers
+
+  const sendMessage = useCallback(message => {
+    //   console.log(`[Chat.js] - calling sendChatMessage | message:  `, message, `chat id: `, chatId )
+    dispatch(sendChatMessage(message, chatId))
+      // .then(_ => messageList.current.scrollIntoView(false))
+  }, [chatId])
 
   useEffect(() => {  // this will subscribe to the chat when this chat view is created
     const unsubFromChat = dispatch(subscribeToChat(chatId))
@@ -35,11 +41,7 @@ function Chat() {
         userStatusListeners.current[user.uid] = dispatch(subscribeToProfile(user.uid, chatId));
       }
     })
-  },[dispatch, chatId])
-
-  const sendMessage = message => {
-    alert(`sending message: ${message}`)
-  }
+  }, [dispatch, chatId])
 
   const unsubFromJoinedUsers = useCallback(() => {
     Object.keys(userStatusListeners.current)
@@ -50,7 +52,7 @@ function Chat() {
     return <LoadingView message={"loading chat..."}/>
   }
 
-      return (
+  return (
     // <BaseLayout>
     <div className="row no-gutters fh">
       <div className="col-3 fh">

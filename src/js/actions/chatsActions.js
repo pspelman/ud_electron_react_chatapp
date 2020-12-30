@@ -103,6 +103,24 @@ export const createChat = (formData, userId) => async dispatch => {
   //   })
 }
 
+
+// export const sendChatMessage = (message, chatId) => (dispatch, getState) => {
+//   // before sending the message, we need to create the user reference
+//   console.log(`[chatsActions.js] - sendChatMessage -- begin!`, )
+//
+//   const newMessage = {...message}  // create a copy of the original message object
+//   const {user} = getState().auth  // the current user
+//   const userRef = db.doc(`userProfiles/${user.uid}`)  // attach the userRef to the message
+//   console.log(`got the userRef: `, userRef)
+//
+//   newMessage.author = userRef
+//   console.log(`[chatsActions.js] sendChatMessage -- going to call sendChatMessage with new message: `, newMessage, '\nand chatId: ', chatId)
+//
+//   return api
+//     .sendChatMessage(newMessage, chatId)
+//     .then(_ => dispatch({type: 'CHATS_MESSAGE_SENT'}))
+// }
+
 // export const subscribeToChat = chatId => dispatch =>
 //   api
 //     .subscribeToChat(chatId, async chat => {
@@ -145,6 +163,7 @@ export const subscribeToProfile = (uid, chatId) => dispatch =>
       dispatch({'type': 'CHATS_UPDATE_USER_STATE', user, chatId})  // handle the updated user state, pass on chatId
     })
 
+
 // export const subscribeToProfile = uid => dispatch =>
 //   api
 //     .subscribeToProfile(uid, user => {
@@ -162,3 +181,17 @@ export const subscribeToProfile = (uid, chatId) => dispatch =>
 //   dispatch({type: 'CHATS_JOIN_SUCCESS', chat: {...newChat, id: chatId}});
 //   return chatId;
 // }
+
+export const sendChatMessage = (message, chatId) => (dispatch, getState) => {
+  console.log(`[chatsActions.js] - sendChatMessage -- begin!`, )
+  const newMessage = {...message};
+  const { user } = getState().auth;
+  const userRef = db.doc(`userProfiles/${user.uid}`);
+  newMessage.author = userRef;
+  //
+  console.log(`[chatsActions.js] - calling to API with new message: `, newMessage )
+
+  return api
+    .sendChatMessage(newMessage, chatId)
+    .then(_ => dispatch({type: 'CHATS_MESSAGE_SENT'}))
+}

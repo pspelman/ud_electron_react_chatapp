@@ -27,7 +27,8 @@ function ChatCreate() {
   }
 
 
-  let randomName = faker.name.jobTitle();
+  let randomJobTitle = faker.name.jobTitle();
+  let randomProductName = faker.commerce.productName();
   let randomDescription = faker.lorem.sentence();
   let randomImage = faker.image.imageUrl();
 
@@ -42,7 +43,7 @@ function ChatCreate() {
             <div className="form-group">
               <label htmlFor="name">Title</label>
               <input
-                defaultValue={randomName}
+                defaultValue={randomProductName}
                 ref={register}
                 name="name"
                 type="text"

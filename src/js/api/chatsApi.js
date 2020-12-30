@@ -58,3 +58,20 @@ export const subscribeToProfile = (uid, onSubscribe) =>  // onSubcribe is the ca
     .collection(`userProfiles`)
     .doc(uid)
     .onSnapshot(snapshot => onSubscribe(snapshot.data()))
+
+export const sendChatMessage = (message, chatId) => {
+  console.log(`[chatsApi.js] sendChatMessage - BEGIN`,)
+  return db
+    .collection('chats')
+    .doc(chatId)
+    .collection('messages')  // getting the collection 'messages'
+    .doc(message.timestamp)  // setting the ID to the timestamp
+    .set(message)  // adding the message itself
+}
+
+export const subscribeToMessage = (chatId, onSubscribe) =>
+  db
+    .collection('chats')
+    .doc(chatId)
+    .collection('messages')
+    .onSnapshot(snapshot => onSubscribe(snapshot.docChanges()))  // subscribe to document changes
