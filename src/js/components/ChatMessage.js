@@ -3,6 +3,7 @@ import React from 'react'
 export default function ChatMessage({message}) {
   return (
     <li
+      key={message.id}
       className="chat-left">
       <div className="chat-avatar">
         <img

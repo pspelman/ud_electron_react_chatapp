@@ -85,10 +85,18 @@ function createChatReducer() {
     }
   })
 
+  const messages = createReducer({}, {
+    'CHATS_SET_MESSAGES': (state, action) => {
+      const previousMessages = state[action.chatId] || []  // either get the previous messages, or its an empty array
+      state[action.chatId] = [...previousMessages, ...action.messages]  // this should only add the new changes into the messages
+    }
+  })
+
   return combineReducers({
     available,
     joined,
     activeChats,
+    messages,
     isLoading: createIsFetchingReducer('CHATS_FETCH'),
     loader: createChatsLoaderReducer(),
   })

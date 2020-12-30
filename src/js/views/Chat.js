@@ -5,7 +5,7 @@ import ChatMessagesList from "../components/ChatMessagesList";
 import ViewTitle from "../components/shared/ViewTitle";
 import {withBaseLayout} from "../layouts/Base"
 import {useDispatch, useSelector} from "react-redux";
-import {sendChatMessage, subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
+import {sendChatMessage, subscribeToChat, subscribeToMessages, subscribeToProfile} from "../actions/chatsActions";
 import LoadingView from "../components/shared/LoadingView";
 import Messenger from "../components/Messenger";
 
@@ -16,6 +16,9 @@ function Chat() {
   const dispatch = useDispatch()
   const activeChat = useSelector(({chats}) => chats.activeChats[chatId])
   const joinedUsers = activeChat?.joinedUsers
+  const chatMessages = useSelector(({chats}) => chats.messages)
+  const messages = chatMessages ? chatMessages[chatId] : []
+
 
   const sendMessage = useCallback(message => {
     //   console.log(`[Chat.js] - calling sendChatMessage | message:  `, message, `chat id: `, chatId )
@@ -25,6 +28,7 @@ function Chat() {
 
   useEffect(() => {  // this will subscribe to the chat when this chat view is created
     const unsubFromChat = dispatch(subscribeToChat(chatId))
+    dispatch(subscribeToMessages(chatId))
     return () => {
       unsubFromChat();
       unsubFromJoinedUsers();
@@ -60,7 +64,7 @@ function Chat() {
       </div>
       <div className="col-9 fh">
         <ViewTitle text={`${activeChat?.name || 'Loading...'}`}/>
-        <ChatMessagesList/>
+        <ChatMessagesList messages={messages}/>
         <Messenger onSubmit={sendMessage}/>
       </div>
     </div>

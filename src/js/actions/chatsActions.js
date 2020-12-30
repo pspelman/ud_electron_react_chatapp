@@ -183,15 +183,28 @@ export const subscribeToProfile = (uid, chatId) => dispatch =>
 // }
 
 export const sendChatMessage = (message, chatId) => (dispatch, getState) => {
-  console.log(`[chatsActions.js] - sendChatMessage -- begin!`, )
-  const newMessage = {...message};
-  const { user } = getState().auth;
-  const userRef = db.doc(`userProfiles/${user.uid}`);
+  console.log(`[chatsActions.js] - sendChatMessage -- begin!`,)
+  const newMessage = {...message}
+  const {user} = getState().auth
+  const userRef = db.doc(`userProfiles/${user.uid}`)
   newMessage.author = userRef;
   //
-  console.log(`[chatsActions.js] - calling to API with new message: `, newMessage )
+  console.log(`[chatsActions.js] - calling to API with new message: `, newMessage)
 
   return api
     .sendChatMessage(newMessage, chatId)
     .then(_ => dispatch({type: 'CHATS_MESSAGE_SENT'}))
+}
+
+export const subscribeToMessages = chatId => dispatch => {
+  return api.subscribeToMessage(chatId, changes => {  // technically receiving an object of changes
+
+    const messages = changes.map(change => {
+      if (change.type === 'added') {  // if the change type is 'added' then it should be shown
+        return {id: change.doc.id, ...change.doc.data()}
+      }
+    })
+    dispatch({type: 'CHATS_SET_MESSAGES', messages, chatId})
+    return messages
+  })
 }
