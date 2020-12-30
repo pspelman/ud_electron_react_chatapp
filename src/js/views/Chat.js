@@ -7,6 +7,7 @@ import {withBaseLayout} from "../layouts/Base"
 import {useDispatch, useSelector} from "react-redux";
 import {subscribeToChat, subscribeToProfile} from "../actions/chatsActions";
 import LoadingView from "../components/shared/LoadingView";
+import Messenger from "../components/Messenger";
 
 // export default function Chat() {
 function Chat() {
@@ -36,6 +37,10 @@ function Chat() {
     })
   },[dispatch, chatId])
 
+  const sendMessage = message => {
+    alert(`sending message: ${message}`)
+  }
+
   const unsubFromJoinedUsers = useCallback(() => {
     Object.keys(userStatusListeners.current)
       .forEach(id => userStatusListeners.current[id]())  // this will execute the callback function for each of the IDs
@@ -44,9 +49,6 @@ function Chat() {
   if (!activeChat?.id) {
     return <LoadingView message={"loading chat..."}/>
   }
-
-
-
 
       return (
     // <BaseLayout>
@@ -57,6 +59,7 @@ function Chat() {
       <div className="col-9 fh">
         <ViewTitle text={`${activeChat?.name || 'Loading...'}`}/>
         <ChatMessagesList/>
+        <Messenger onSubmit={sendMessage}/>
       </div>
     </div>
     // </BaseLayout>
