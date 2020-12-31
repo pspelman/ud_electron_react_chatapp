@@ -48,7 +48,7 @@ function Settings() {
                     checked={playSound}
                     type="checkbox"
                     className="form-check-input"/>
-                  <label className="form-check-label">Sound notification</label>
+                  <label className="form-check-label">Play Sounds</label>
                 </div>
               </div>
               <button

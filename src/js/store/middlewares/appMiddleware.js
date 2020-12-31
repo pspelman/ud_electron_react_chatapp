@@ -1,4 +1,5 @@
 import Notification from "../../utils/notifications";
+import Storage from "../../utils/storage";
 
 export default store => next => action => {
   switch (action.type) {
@@ -8,14 +9,19 @@ export default store => next => action => {
       // electron app notification
       Notification.show({
         title: 'Connection status:',
-        body: action.isOnline ? 'Online' : 'Offline'})
-      // console.log(`Middleware for connection status change`)
+        body: action.isOnline ? 'Online' : 'Offline'
+      })
+    // console.log(`Middleware for connection status change`)
     case 'SETTINGS_UPDATE': {
-      const {setting, value } = action  // get the items out of the action
-      const currentSettings = localStorage.getItem('app-settings')
-      const parsedCurrentSettings = currentSettings ? JSON.parse(currentSettings) : {}  // if local storage HAS them, parse them out
-      const settings = {...parsedCurrentSettings, [setting]: value}  // new settings
-      localStorage.setItem('app-settings', JSON.stringify(settings))
+      const {setting, value} = action  // get the items out of the action
+
+      // const currentSettings = localStorage.getItem('app-settings')
+      const currentSettings = Storage.getItem('app-settings')
+
+      // const parsedCurrentSettings = currentSettings ? JSON.parse(currentSettings) : {}  // if local storage HAS them, parse them out
+      const settings = {...currentSettings, [setting]: value}  // new settings
+      // localStorage.setItem('app-settings', JSON.stringify(settings))
+      Storage.setItem('app-settings', settings)
     }
 
     case 'AUTH_LOGOUT_SUCCESS': {
@@ -25,7 +31,7 @@ export default store => next => action => {
           messageSubscriptions[messageSub]()
         });
       } else {
-        console.log(`THERE WERE NO MESSAGE SUBS!?!?!?`, )
+        console.log(`THERE WERE NO MESSAGE SUBS!?!?!?`,)
       }
 
     }
