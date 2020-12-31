@@ -8,13 +8,15 @@
     "debug": "electron --inspect=5858 .",
     "packwatch": "webpack --config webpack.common.js --watch",
     "watch": "nodemon --exec electron -e js,jade,html,css .",
-    "build": "electron-builder -m"
+    "build": "electron-builder -m",
+    "buildpack": "webpack --config webpack.prod.js"
   },
   "repository": "https://github.com/pspelman/ud_electron_react_chatapp",
   "author": "Philip Spelman",
   "license": "MIT",
   "devDependencies": {
     "electron": "^11.0.3",
+    "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-redux-devtools": "^0.3.4",
     "electron-reload": "^1.5.0",
@@ -48,6 +50,61 @@
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.10.0",
-    "webpack-cli": "^4.2.0"
+    "webpack-cli": "^4.2.0",
+    "webpack-merge": "^5.7.3"
+  },
+  "build": {
+    "appId": "com.udchatapp.philspelman",
+    "copyright": "Copyright philspelman.com",
+    "publish": {
+      "provider": "github"
+    },
+    "files": [
+      "build/**/*",
+      "assets/**/*",
+      "utils/**/*",
+      "index.html",
+      "splash.html",
+      "splash.css",
+      "main.js",
+      "preload.js"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/images/react_app_logo.png",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 400,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "icon": "assets/images/react_app_logo.png",
+      "certificateFile": "private/philipSpelmanDev.p12",
+      "certificatePassword": "",
+      "verifyUpdateCodeSignature": false,
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
+    }
   }
 }
