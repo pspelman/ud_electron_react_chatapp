@@ -2,6 +2,7 @@ import React, {useCallback} from 'react'
 import ChatMessage from "./ChatMessage";
 import {useSelector} from "react-redux";
 
+
 export default function ChatMessagesList({messages = []}) {
   const user = useSelector(({auth}) => auth.user)
   const isAuthor = useCallback(message => {
