@@ -37,7 +37,7 @@ function createWindow() {
   mainWindow.loadFile('./index.html').then(r => {})
   // mainWindow.loadURL(`file://${__dirname}/index.html`)
   if (isDev) {
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
   }
 
   mainWindow.on('closed', () => {  // window close listener
@@ -45,6 +45,44 @@ function createWindow() {
   })
 
 }
+
+function createSplashScreen() {
+  const state = windowStateKeeper({
+    defaultWidth: 400,
+    defaultHeight: 400
+  })
+
+  let newWindow
+  newWindow = new BrowserWindow({
+    // x: mainWindow.getPosition().x - 100,
+    // y: mainWindow.getPosition().y - 100,
+    width: state.width,
+    height: state.height,
+    minWidth: 350, minHeight: 350,
+    backgroundColor: 'white',
+    webPreferences: {
+      // nodeIntegration: true,
+      nodeIntegration: false,
+      worldSafeExecuteJavaScript: true,
+      contextIsolation: true,
+      // preload: path.join(__dirname, 'preload.js'), // this is the path to the preload.js
+    }
+  })
+  // create the app menu
+  appMenu(newWindow)
+  // Todo: Implement touchbar features
+  // if (process.platform === 'darwin') newWindow.setTouchBar(touchbar)
+
+  state.manage(newWindow)
+  newWindow.loadFile('./additionalWindow.html').then(r => {})
+  // newWindow.loadURL(`file://${__dirname}/index.html`)
+
+  newWindow.on('closed', () => {  // window close listener
+    newWindow = null
+  })
+
+}
+
 
 // adding reloading
 if (isDev) {
@@ -62,13 +100,15 @@ app.whenReady().then(() => {
     setTimeout(createWindow, 400);
       installExtension(REDUX_DEVTOOLS)
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      .then((name) => console.log(`Added Extension:  ${name}`))
+      .then((name) => {
+        console.log(`Added Extension:  ${name}`)
+      })
       .catch((err) => console.log("An error occurred: ", err));
   }
   // create macOS menu
   // build the menu
 
-  const template = require(`${__dirname}/utils/Menu`).createTemplate(app)
+  // const template = require(`${__dirname}/utils/Menu`).createTemplate(app)  // the course approach for adding the menu
   // let menu = Menu.buildFromTemplate(appMenu);
   // set as the main app menu
   // Menu.setApplicationMenu(menu)
