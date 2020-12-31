@@ -83,6 +83,11 @@ ipcMain.handle('reload-electron-app', () => {
 
 });
 
+ipcMain.handle('app-quit', () => {
+  console.log(`QUITTING THE APP`, )
+  app.exit()
+});
+
 // When app icon is clicked and app is running, (macOS) recreate the BrowserWindow
 app.on('activate', () => {
   if (mainWindow === null) {

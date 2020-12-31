@@ -36,10 +36,9 @@ export default function Navbar({canGoBack, view}) {
           {view !== "Settings"  &&
           <Link
             to='/settings'
-            className="btn btn-outline-success ml-2">Settings</Link>
-          }
+            className="btn btn-outline-success ml-2">Settings</Link>}
         </div>
-        MESSAGE {message}
+        {message}
 
         <div className="chat-navbar-inner-right">
           {/*{user ? <img src={ninjaImage} className={"avatar mr-2"} alt=""/> : ''}*/}

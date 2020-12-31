@@ -40,18 +40,25 @@ function AuthRoute({children, ...rest}) {
 
   return (
     <Route
-      {...rest}  // destructurize anything else coming in
+      {...rest} // destructurize anything else coming in
       render={props =>
         user ?
           React.cloneElement(onlyChild, {...rest, ...props}) :
-          <Redirect to={"/"} />
+          <Redirect to={"/"}/>
       }
-      />
+    />
   )
 }
 
-const ContentWrapper = ({children}) => <div className="content-wrapper">{children}</div>
+const ContentWrapper = ({children}) => {
+  const isDarkTheme = useSelector(({settings}) => settings.isDarkTheme)
 
+  return (
+    <div className={`content-wrapper ${isDarkTheme ? 'dark' : 'light'}`}>
+      {children}
+    </div>
+  )
+}
 
 
 function ChatApp() {
@@ -88,43 +95,43 @@ function ChatApp() {
     return <LoadingView message={"Offline... waiting to reconnect..."}/>
   }
   if (isChecking) {
-    return <LoadingView />
+    return <LoadingView/>
   }
 
   return (
-      <Router>
-        <ContentWrapper>
-          <Switch>
-            <Route path={"/"} exact={true}>
-              <WelcomeView />
-            </Route>
+    <Router>
+      <ContentWrapper>
+        <Switch>
+          <Route path={"/"} exact={true}>
+            <WelcomeView/>
+          </Route>
 
-            <AuthRoute path={"/home"}>
-              <HomeView/>
-            </AuthRoute>
+          <AuthRoute path={"/home"}>
+            <HomeView/>
+          </AuthRoute>
 
-            <AuthRoute path={"/chatCreate"}>
-              <ChatCreateView />
-            </AuthRoute>
+          <AuthRoute path={"/chatCreate"}>
+            <ChatCreateView/>
+          </AuthRoute>
 
-            <AuthRoute path={"/settings"}>
-              <Settings/>
-            </AuthRoute>
+          <AuthRoute path={"/settings"}>
+            <Settings/>
+          </AuthRoute>
 
-            {/*Note: needed to add the :id to the route for it to get grabbed from the params*/}
-            <AuthRoute path="/chat/:id">
-              <ChatView />
-            </AuthRoute>
+          {/*Note: needed to add the :id to the route for it to get grabbed from the params*/}
+          <AuthRoute path="/chat/:id">
+            <ChatView/>
+          </AuthRoute>
 
-            <Route path={"/welcome"}>
-              <Login/>
-            </Route>
+          <Route path={"/welcome"}>
+            <Login/>
+          </Route>
 
-            <HomeLink/>
+          <HomeLink/>
 
-          </Switch>
-        </ContentWrapper>
-      </Router>
+        </Switch>
+      </ContentWrapper>
+    </Router>
   );
 }
 
@@ -132,7 +139,7 @@ export default function App() {
   // debugger
   return (
     <StoreProvider>
-      <ChatApp />
+      <ChatApp/>
     </StoreProvider>
   )
 }

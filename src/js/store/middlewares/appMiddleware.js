@@ -7,10 +7,13 @@ export default store => next => action => {
     case 'APP_IS_OFFLINE':
       // alert('Middleware stuff for connection status change')
       // electron app notification
-      Notification.show({
-        title: 'Connection status:',
-        body: action.isOnline ? 'Online' : 'Offline'
-      })
+      const showNotifications = store.getState().settings.showNotifications
+      if (showNotifications) {
+        Notification.show({
+          title: 'Connection status:',
+          body: action.isOnline ? 'Online' : 'Offline'
+        })
+      }
     // console.log(`Middleware for connection status change`)
     case 'SETTINGS_UPDATE': {
       const {setting, value} = action  // get the items out of the action
@@ -18,9 +21,7 @@ export default store => next => action => {
       // const currentSettings = localStorage.getItem('app-settings')
       const currentSettings = Storage.getItem('app-settings')
 
-      // const parsedCurrentSettings = currentSettings ? JSON.parse(currentSettings) : {}  // if local storage HAS them, parse them out
       const settings = {...currentSettings, [setting]: value}  // new settings
-      // localStorage.setItem('app-settings', JSON.stringify(settings))
       Storage.setItem('app-settings', settings)
     }
 

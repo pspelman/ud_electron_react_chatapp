@@ -44,6 +44,9 @@ contextBridge.exposeInMainWorld('electron', {
     restartApp() {
       console.log(`invoking restart app`, )
       ipcRenderer.invoke('reload-electron-app')
+    },
+    quitApp() {
+      ipcRenderer.invoke('app-quit')
     }
   },
   notificationApi: {

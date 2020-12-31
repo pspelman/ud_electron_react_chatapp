@@ -53,8 +53,7 @@ function Settings() {
               </div>
               <button
                 type="button"
-                onClick={() => {
-                }}
+                onClick={() => window.electron.controlApi.quitApp()}
                 className="btn btn-danger">
                 Quit App
               </button>

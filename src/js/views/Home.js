@@ -19,6 +19,7 @@ function Home() {
   const dispatch = useDispatch()
   const joinedChats = useSelector(({chats}) => chats.joined)
   const availableChats = useSelector(({chats}) => chats.available)
+
   useEffect(() => {
     AppNotification.setup()
   }, [dispatch]);

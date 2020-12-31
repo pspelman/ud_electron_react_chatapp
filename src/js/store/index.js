@@ -37,6 +37,13 @@ export default function configureStore() {
   const rootReducer = (state, action) => {
     if (action.type === 'AUTH_LOGOUT_SUCCESS') {
       console.log(`LOGGING OUT and RESETTING STATE`, )
+      // check if the object is supposed to be persisted on logout
+      Object.keys(state).forEach(sk => {
+        if (state[sk].savable) {
+          return
+        }
+        state[sk] = undefined
+      })
       state = undefined
     }
     return mainReducer(state, action);

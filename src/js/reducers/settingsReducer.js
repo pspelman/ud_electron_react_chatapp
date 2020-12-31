@@ -3,7 +3,8 @@ import Storage from "../utils/storage";
 const INITIAL_STATE =  {
   isDarkTheme: false,
   playSound: true,
-  showNotifications: true
+  showNotifications: true,
+  savable: true,
 }
 
 const localSettings = () => {
