@@ -1,14 +1,15 @@
-const {app, BrowserWindow, Notification, ipcMain, Menu} = require('electron')
+const {app, BrowserWindow, Notification, ipcMain, Tray, Menu} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 const {REDUX_DEVTOOLS} = require("electron-devtools-installer");
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const {default: installExtension, REACT_DEVELOPER_TOOLS} = require('electron-devtools-installer');
 const appMenu = require('./utils/MainMenu')
 const isDev = !app.isPackaged // if this is true, we are in production, else in dev
 
 const dockIcon = path.join(__dirname, 'assets', 'images', 'react_app_logo.png')
+const trayIcon = path.join(__dirname, 'assets', 'images', 'react_icon.png')
 if (process.platform === 'darwin') {
- app.dock.setIcon(dockIcon)
+  app.dock.setIcon(dockIcon)
 }
 
 let mainWindow;
@@ -25,6 +26,7 @@ function createWindow() {
     height: state.height,
     minWidth: 350, minHeight: 350,
     backgroundColor: 'white',
+    show: false,
     webPreferences: {
       // nodeIntegration: true,
       nodeIntegration: false,
@@ -39,7 +41,8 @@ function createWindow() {
   // if (process.platform === 'darwin') mainWindow.setTouchBar(touchbar)
 
   state.manage(mainWindow)
-  mainWindow.loadFile('./index.html').then(r => {})
+  mainWindow.loadFile('./index.html').then(r => {
+  })
   // mainWindow.loadURL(`file://${__dirname}/index.html`)
   if (isDev) {
     // mainWindow.webContents.openDevTools();
@@ -48,68 +51,81 @@ function createWindow() {
   mainWindow.on('closed', () => {  // window close listener
     mainWindow = null
   })
-
+  return mainWindow
 }
 
-function createSplashScreen() {
-  const state = windowStateKeeper({
-    defaultWidth: 400,
-    defaultHeight: 400
-  })
+let splashWindow
 
-  let newWindow
-  newWindow = new BrowserWindow({
-    // x: mainWindow.getPosition().x - 100,
-    // y: mainWindow.getPosition().y - 100,
-    width: state.width,
-    height: state.height,
+function createSplashScreen() {
+  splashWindow = new BrowserWindow({
+    width: 400,
+    height: 200,
     minWidth: 350, minHeight: 350,
-    backgroundColor: 'white',
+    backgroundColor: '#6e707e',
     webPreferences: {
-      // nodeIntegration: true,
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
       contextIsolation: true,
-      // preload: path.join(__dirname, 'preload.js'), // this is the path to the preload.js
     }
   })
-  // create the app menu
-  appMenu(newWindow)
-  // Todo: Implement touchbar features
-  // if (process.platform === 'darwin') newWindow.setTouchBar(touchbar)
-
-  state.manage(newWindow)
-  newWindow.loadFile('./additionalWindow.html').then(r => {})
-  // newWindow.loadURL(`file://${__dirname}/index.html`)
-
-  newWindow.on('closed', () => {  // window close listener
-    newWindow = null
+  splashWindow.loadFile('splash.html')
+  splashWindow.on('closed', () => {  // window close listener
+    splashWindow = null
   })
+  return splashWindow
 
 }
 
 
 // adding reloading
 if (isDev) {
-  console.log(`adding electron-reload`, )
+  console.log(`adding electron-reload`,)
 
   require('electron-reload')(__dirname, {
     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')  // specify the path into electron
-    
+
   })  // this is the reload 
 }
 
+let tray = null
 // when the app is ready, create the main window
 app.whenReady().then(() => {
-  {
-    setTimeout(createWindow, 400);
-      installExtension(REDUX_DEVTOOLS)
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      .then((name) => {
-        console.log(`Added Extension:  ${name}`)
-      })
-      .catch((err) => console.log("An error occurred: ", err));
-  }
+  mainWindow = createWindow()
+  let splash = createSplashScreen()
+  mainWindow.once('ready-to-show', () => {
+    splash.hide()
+    splash.destroy()
+    console.log(`trying to show the main window now!!`, )
+    mainWindow.show()
+  })
+
+
+  // {
+  //   setTimeout(createWindow, 100)
+  //   installExtension(REDUX_DEVTOOLS)
+  //     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  //     .then((name) => {
+  //       console.log(`Added Extension:  ${name}`)
+  //     })
+  //     .catch((err) => console.log("An error occurred: ", err));
+  // }
+  //   (async () => {
+  //     console.log(`waiting for mainWindow`, )
+  //     while (mainWindow === 'undefined') {
+  //       await new Promise(resolve => setTimeout(resolve, 1000))
+  //       mainWindow.once('ready-to-show', () => {
+  //         splash.destroy()
+  //         console.log(`trying to show the main window now!!`, )
+  //         mainWindow.show()
+  //       })
+  //     }
+  //   })()
+
+  tray = new Tray(trayIcon)
+  let menu = Menu.buildFromTemplate(require('./utils/Menu').createTemplate(app))
+
+  tray.setContextMenu(menu)
+
   // create macOS menu
   // build the menu
 
@@ -142,7 +158,7 @@ ipcMain.handle('reload-electron-app', () => {
 });
 
 ipcMain.handle('app-quit', () => {
-  console.log(`QUITTING THE APP`, )
+  console.log(`QUITTING THE APP`,)
   app.exit()
 });
 
