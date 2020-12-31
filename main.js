@@ -6,7 +6,12 @@ const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-d
 const appMenu = require('./utils/MainMenu')
 const isDev = !app.isPackaged // if this is true, we are in production, else in dev
 
-let mainWindow
+const dockIcon = path.join(__dirname, 'assets', 'images', 'react_app_logo.png')
+if (process.platform === 'darwin') {
+ app.dock.setIcon(dockIcon)
+}
+
+let mainWindow;
 
 function createWindow() {
   const state = windowStateKeeper({
