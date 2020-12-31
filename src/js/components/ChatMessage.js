@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useCallback} from 'react'
+import {useSelector} from "react-redux";
 
-export default function ChatMessage({message}) {
+export default function ChatMessage({message, chatClass}) {
   return (
     <li
       key={message.id}
-      className="chat-left">
+      className={`${chatClass}`}>
       <div className="chat-avatar">
         <img
           // src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"

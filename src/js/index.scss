@@ -246,12 +246,13 @@ html, body {
   padding: 1rem;
   overflow-y: auto;
   height: 70%;
+  max-height: 500px;
 }
 
 .chat-input {
-  position: absolute;
+  position: relative;
   width: 100%;
-  bottom: 0;
+  //bottom: 0;
   padding: 20px;
 }
 
