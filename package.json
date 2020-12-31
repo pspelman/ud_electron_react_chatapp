@@ -7,7 +7,8 @@
     "start": "electron .",
     "debug": "electron --inspect=5858 .",
     "packwatch": "webpack --config webpack.common.js --watch",
-    "watch": "nodemon --exec electron -e js,jade,html,css ."
+    "watch": "nodemon --exec electron -e js,jade,html,css .",
+    "build": "electron-builder -m"
   },
   "repository": "https://github.com/pspelman/ud_electron_react_chatapp",
   "author": "Philip Spelman",

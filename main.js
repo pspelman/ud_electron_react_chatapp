@@ -1,9 +1,9 @@
-const {app, BrowserWindow, Notification, ipcMain} = require('electron')
+const {app, BrowserWindow, Notification, ipcMain, Menu} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 const {REDUX_DEVTOOLS} = require("electron-devtools-installer");
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-
+const appMenu = require('./utils/MainMenu')
 const isDev = !app.isPackaged // if this is true, we are in production, else in dev
 
 let mainWindow
@@ -28,6 +28,10 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'), // this is the path to the preload.js
     }
   })
+  // create the app menu
+  appMenu(mainWindow)
+  // Todo: Implement touchbar features
+  // if (process.platform === 'darwin') mainWindow.setTouchBar(touchbar)
 
   state.manage(mainWindow)
   mainWindow.loadFile('./index.html').then(r => {})
@@ -61,6 +65,15 @@ app.whenReady().then(() => {
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log("An error occurred: ", err));
   }
+  // create macOS menu
+  // build the menu
+
+  const template = require(`${__dirname}/utils/Menu`).createTemplate(app)
+  // let menu = Menu.buildFromTemplate(appMenu);
+  // set as the main app menu
+  // Menu.setApplicationMenu(menu)
+
+
   // createWindow()
   //
   // const notification = new Notification({title: 'Welcome', body: 'You\'re online'})
