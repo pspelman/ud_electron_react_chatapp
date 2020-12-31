@@ -90,8 +90,8 @@ if (isDev) {
 let tray = null
 // when the app is ready, create the main window
 app.whenReady().then(() => {
-  mainWindow = createWindow()
   let splash = createSplashScreen()
+  mainWindow = createWindow()
   mainWindow.once('ready-to-show', () => {
     splash.hide()
     splash.destroy()

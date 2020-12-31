@@ -54,7 +54,7 @@
     "webpack-merge": "^5.7.3"
   },
   "build": {
-    "appId": "com.udchatapp.philspelman",
+    "appId": "com.chatapp.philspelman",
     "copyright": "Copyright philspelman.com",
     "publish": {
       "provider": "github"
