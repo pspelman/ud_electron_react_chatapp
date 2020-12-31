@@ -19,6 +19,7 @@ import Messenger from "../components/Messenger";
 function Chat() {
   const {id: chatId} = useParams()
   const userStatusListeners = useRef({})  // need to keep the value between renders, so we use useRef to keep the value between renders
+  const messageList = useRef({})
   const dispatch = useDispatch()
   const activeChat = useSelector(({chats}) => chats.activeChats[chatId])
   const joinedUsers = activeChat?.joinedUsers
@@ -30,6 +31,7 @@ function Chat() {
   const sendMessage = useCallback(message => {
     //   console.log(`[Chat.js] - calling sendChatMessage | message:  `, message, `chat id: `, chatId )
     dispatch(sendChatMessage(message, chatId))
+      .then(_ => messageList.current.scrollIntoView(false))
       // .then(_ => messageList.current.scrollIntoView(false))
   }, [chatId])
 
@@ -77,7 +79,7 @@ function Chat() {
       </div>
       <div className="col-9 fh">
         <ViewTitle text={`${activeChat?.name || 'Loading...'}`}/>
-        <ChatMessagesList messages={messages}/>
+        <ChatMessagesList messages={messages} innerRef={messageList}/>
         <Messenger onSubmit={sendMessage}/>
       </div>
     </div>
