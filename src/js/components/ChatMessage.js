@@ -7,9 +7,10 @@ export default function ChatMessage({message}) {
       className="chat-left">
       <div className="chat-avatar">
         <img
-          src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"
-          alt="Retail Admin" />
-        <div className="chat-name">Test User 1</div>
+          // src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"
+          src={message.author.avatar}
+          alt="avatar placeholder" />
+        <div className="chat-name">{message.author?.username || 'Anonymous'}</div>
       </div>
       <div className="chat-text-wrapper">
         <span className="chat-text">{message?.content || '...waiting on content'}</span>

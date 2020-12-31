@@ -5,7 +5,13 @@ import ChatMessagesList from "../components/ChatMessagesList";
 import ViewTitle from "../components/shared/ViewTitle";
 import {withBaseLayout} from "../layouts/Base"
 import {useDispatch, useSelector} from "react-redux";
-import {sendChatMessage, subscribeToChat, subscribeToMessages, subscribeToProfile} from "../actions/chatsActions";
+import {
+  registerMessageSubscription,
+  sendChatMessage,
+  subscribeToChat,
+  subscribeToMessages,
+  subscribeToProfile
+} from "../actions/chatsActions";
 import LoadingView from "../components/shared/LoadingView";
 import Messenger from "../components/Messenger";
 
@@ -17,7 +23,8 @@ function Chat() {
   const activeChat = useSelector(({chats}) => chats.activeChats[chatId])
   const joinedUsers = activeChat?.joinedUsers
   const chatMessages = useSelector(({chats}) => chats.messages)
-  const messages = chatMessages ? chatMessages[chatId] : []
+  const messages = chatMessages[chatId]
+  const messageSubs = useSelector(({chats}) => chats.messageSubscriptions[chatId])
 
 
   const sendMessage = useCallback(message => {
@@ -28,7 +35,13 @@ function Chat() {
 
   useEffect(() => {  // this will subscribe to the chat when this chat view is created
     const unsubFromChat = dispatch(subscribeToChat(chatId))
-    dispatch(subscribeToMessages(chatId))
+
+    if (!messageSubs) {  // ONLY SUBSCRIBE if the chat has NOT yet been subscribed to
+      // register the UN subscribe method
+      const unsubFromMessages = dispatch(subscribeToMessages(chatId))  // need to manage subscriptions to messages
+      dispatch(registerMessageSubscription(chatId, unsubFromMessages));  // pass the messages unsub function to the reducer
+    }
+
     return () => {
       unsubFromChat();
       unsubFromJoinedUsers();

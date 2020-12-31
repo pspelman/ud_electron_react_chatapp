@@ -197,14 +197,37 @@ export const sendChatMessage = (message, chatId) => (dispatch, getState) => {
 }
 
 export const subscribeToMessages = chatId => dispatch => {
-  return api.subscribeToMessage(chatId, changes => {  // technically receiving an object of changes
+  return api.subscribeToMessage(chatId, async changes => {  // technically receiving an object of changes
 
     const messages = changes.map(change => {
       if (change.type === 'added') {  // if the change type is 'added' then it should be shown
         return {id: change.doc.id, ...change.doc.data()}
       }
     })
-    dispatch({type: 'CHATS_SET_MESSAGES', messages, chatId})
+
+    const messagesWithAuthor = []
+    const cache = {}
+
+    for await(let message of messages) {
+      if (cache[message.author.id]) {
+        message.author = cache[message.author.id];
+      }
+      else {
+        const userSnapshot = await message.author.get();  // the author is a userRef, so calling get() on it
+        cache[userSnapshot.id] = userSnapshot.data()
+        message.author = cache[userSnapshot.id]
+      }
+      messagesWithAuthor.push(message)  // adding the authored message to the list
+
+    }
+
+    dispatch({type: 'CHATS_SET_MESSAGES', messages: messagesWithAuthor, chatId})
     return messages
   })
 }
+
+export const registerMessageSubscription = (chatId, messageSub) => ({
+  type: 'CHATS_REGISTER_MESSAGE_SUB',
+  sub: messageSub,
+  chatId
+})

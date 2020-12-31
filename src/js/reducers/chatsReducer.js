@@ -79,7 +79,7 @@ function createChatReducer() {
 
       if (indexOfUser < 0) return state  // the user is not found in joinedUsers
       // note: the line below was enabled when a weird bug happened where the logged in user wouldn't show as online
-      if(joinedUsers[indexOfUser].state === user.state) return state  // the state has not changed
+      if (joinedUsers[indexOfUser].state === user.state) return state  // the state has not changed
       joinedUsers[indexOfUser].state = user.state  // the state has changed --> update the state of the user
 
     }
@@ -87,16 +87,28 @@ function createChatReducer() {
 
   const messages = createReducer({}, {
     'CHATS_SET_MESSAGES': (state, action) => {
+      console.log(`PROCESSING CHATS_SET_MESSAGES!`,)
+
       const previousMessages = state[action.chatId] || []  // either get the previous messages, or its an empty array
       state[action.chatId] = [...previousMessages, ...action.messages]  // this should only add the new changes into the messages
     }
   })
+
+  const messageSubscriptions = (state={}, action) => {
+    switch (action.type) {
+      case 'CHATS_REGISTER_MESSAGE_SUB':
+        return {...state, [action.chatId]: action.sub}  // keep track of the subscriptions by chatId
+      default:
+        return state
+    }
+  }
 
   return combineReducers({
     available,
     joined,
     activeChats,
     messages,
+    messageSubscriptions,
     isLoading: createIsFetchingReducer('CHATS_FETCH'),
     loader: createChatsLoaderReducer(),
   })
