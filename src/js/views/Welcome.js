@@ -12,6 +12,10 @@ export default function Welcome() {
   // const isChecking = useSelector(({auth}) => auth.login.isChecking)  // using redux to see if authentication is in progress
   const isChecking = useSelector(({auth}) => auth.isChecking)  // using redux to see if authentication is in progress
 
+  // const entireState = useSelector(state => state)  // Note: this will give the entire state (good for debugging)
+  // debugger
+
+
   if (isChecking) {  // want to show a loader if we're checking on the auth status
     console.log(`checking auth`, )
     return <LoadingView />

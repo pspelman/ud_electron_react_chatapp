@@ -198,7 +198,6 @@ export const sendChatMessage = (message, chatId) => (dispatch, getState) => {
 
 export const subscribeToMessages = chatId => dispatch => {
   return api.subscribeToMessage(chatId, async changes => {  // technically receiving an object of changes
-
     const messages = changes.map(change => {
       if (change.type === 'added') {  // if the change type is 'added' then it should be shown
         return {id: change.doc.id, ...change.doc.data()}

@@ -21,6 +21,7 @@ import {
   Switch,
   Route, Link, useHistory, useParams
 } from 'react-router-dom'
+import {loadInitialSettings} from "./actions/settingsActions";
 
 class HomeLink extends React.Component {
   render() {
@@ -56,6 +57,7 @@ const ContentWrapper = ({children}) => <div className="content-wrapper">{childre
 function ChatApp() {
   // debugger
   const dispatch = useDispatch()
+  dispatch(loadInitialSettings())
   const isChecking = useSelector(({auth}) => auth.isChecking)
   const isOnline = useSelector(({app}) => app.isOnline)
   const user = useSelector(({auth}) => auth.user)

@@ -4,6 +4,7 @@ import chatReducer from "../reducers/chatsReducer";
 import authReducer from "../reducers/authReducer";
 import appReducer from "../reducers/appReducer";
 import appMiddleware from "./middlewares/appMiddleware";
+import settingsReducer from "../reducers/settingsReducer";
 // import {devToolsEnhancer} from "electron-redux-devtools";
 // import { devToolsEnhancer } from 'electron-redux-devtools';
 
@@ -25,10 +26,23 @@ export default function configureStore() {
   //     data2: 'some more testing data',
   //   }
   // }, applyMiddleware(...middlewares))
+
+  const mainReducer = combineReducers({  // Note: hook up the store, reducer, and action handlers (middleware)
+    chats: chatReducer,
+    auth: authReducer,
+    app: appReducer,
+    settings: settingsReducer,
+  })
+
+  const rootReducer = (state, action) => {
+    if (action.type === 'AUTH_LOGOUT_SUCCESS') {
+      console.log(`LOGGING OUT and RESETTING STATE`, )
+      state = undefined
+    }
+    return mainReducer(state, action);
+  }
+
   return createStore(
-    combineReducers({  // Note: hook up the store, reducer, and action handlers (middleware)
-      chats: chatReducer,
-      auth: authReducer,
-      app: appReducer,
-    }), applyMiddleware(...middlewares))
+    rootReducer,
+    applyMiddleware(...middlewares))
 }
