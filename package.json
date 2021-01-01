@@ -31,6 +31,8 @@
     "bootstrap": "^4.5.3",
     "css-loader": "^5.0.1",
     "dotenv-webpack": "^6.0.0",
+    "electron-devtools-installer": "^3.1.1",
+    "electron-redux-devtools": "^0.3.4",
     "electron-window-state": "^5.0.3",
     "faker": "^5.1.0",
     "firebase": "^8.1.2",
