@@ -9,6 +9,7 @@
     "packwatch": "webpack --config webpack.common.js --watch",
     "watch": "nodemon --exec electron -e js,jade,html,css .",
     "build": "electron-builder -m",
+    "mac": "rm -rf ./dist && GH_TOKEN=$( cat private/GH_TOKEN.txt ) electron-builder -m -p 'onTagOrDraft'",
     "buildpack": "webpack --config webpack.prod.js"
   },
   "repository": "https://github.com/pspelman/ud_electron_react_chatapp",

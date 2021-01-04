@@ -10,8 +10,9 @@
 /build
 /dist
 
-# ENV file
+# ENV & Private files
 .env
+./private
 
 # misc
 .DS_Store
