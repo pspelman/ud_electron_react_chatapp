@@ -28,7 +28,8 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            defaultValue={`${faker.name.firstName().toLowerCase()}@phil.com`}
+            // defaultValue={`${faker.name.firstName().toLowerCase()}@phil.com`}
+            defaultValue={`someone@somewhere`}
             ref={register}
             type="email"
             className="form-control"
@@ -62,7 +63,7 @@ export default function RegisterForm() {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            defaultValue={"123456"}
+            // defaultValue={"123456"}
             ref={register}
             name="password"
             type="password"

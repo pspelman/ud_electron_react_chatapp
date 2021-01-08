@@ -22,6 +22,7 @@ import {
   Route, Link, useHistory, useParams
 } from 'react-router-dom'
 import {loadInitialSettings} from "./actions/settingsActions";
+import ChatDirectView from "./views/ChatDirect";
 
 class HomeLink extends React.Component {
   render() {
@@ -121,6 +122,10 @@ function ChatApp() {
           {/*Note: needed to add the :id to the route for it to get grabbed from the params*/}
           <AuthRoute path="/chat/:id">
             <ChatView/>
+          </AuthRoute>
+
+          <AuthRoute path={"/chatDirect"}>
+            <ChatDirectView/>
           </AuthRoute>
 
           <Route path={"/welcome"}>

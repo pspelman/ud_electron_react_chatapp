@@ -10,7 +10,7 @@ export default function ChatMessage({message, chatClass}) {
       <div className="chat-avatar">
         <img
           // src="https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png"
-          src={message.author.avatar}
+          src={message.author?.avatar}
           alt="avatar placeholder"/>
         <div className="chat-name">{message.author?.username || 'Anonymous'}</div>
       </div>

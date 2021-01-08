@@ -45,7 +45,7 @@ function createWindow() {
   })
   // mainWindow.loadURL(`file://${__dirname}/index.html`)
   if (isDev) {
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   }
 
   mainWindow.on('closed', () => {  // window close listener

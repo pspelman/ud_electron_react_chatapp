@@ -33,10 +33,20 @@ export default function Navbar({canGoBack, view}) {
       <nav className="chat-navbar-inner">
         <div className="chat-navbar-inner-left">
           {canGoBack && <BackButton/>}
-          {view !== "Settings"  &&
-          <Link
-            to='/settings'
-            className="btn btn-outline-success ml-2">Settings</Link>}
+          {
+            view !== "Settings" &&
+            <Link to='/settings'
+                  className="btn btn-outline-success ml-2">
+              Settings
+            </Link>
+          }
+          {
+            view !== "ChatDirectView" &&
+            <Link to='/chatDirect'
+                  className="btn btn-outline-success ml-2">
+              Socket Chat
+            </Link>
+          }
         </div>
         {message}
 
