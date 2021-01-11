@@ -13,21 +13,19 @@ const ChatDirectView = () => {
   }, [])
 
   return (
-        <React.Fragment>
-            <h1>
-              ChatDirectView
-              <br/>
-              <div id={"output"}>
-                View the incoming messages
-              </div>
-              <div>
-                input outgoing messages
-                <br/>
-              <Messenger onSubmit={chatSocket.doSend}/>
-              </div>
-            </h1>
-        </React.Fragment>
-    )
+    <div>
+      <div className={"chat-name-container"}>
+        <span className={"name"}>
+          Chat Direct
+        </span>
+      </div>
+      <br/>
+      <div id={"output"}></div>
+      <div className={'container'}>
+        <Messenger onSubmit={chatSocket.doSend}/>
+      </div>
+    </div>
+  )
 }
 
 export default withBaseLayout(ChatDirectView, {canGoBack: true})

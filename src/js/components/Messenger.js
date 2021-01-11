@@ -19,23 +19,27 @@ export default function Messenger({onSubmit}) {
     const message = {
       content: value.trim(),
       timestamp: createTimestamp(),
+      direction: 'outbound',
     }
     onSubmit(message)
   }
 
   return (
     <div className="chat-input form-group mt-3 mb-0">
-          <textarea
-            // onKeyPress={(e) => {onKeyPress(e)}}
-            onChange={e => setValue(e.target.value)}
-            onKeyPress={onKeyPress}
-            className={"form-control"}
-            value={value}
-            name="newChat"
-            id="newChat"
-            placeholder={"...your message..."}
-            cols="30"
-            rows="3">
+      <label htmlFor="newChat">
+        input outgoing messages
+      </label>
+      <textarea
+        // onKeyPress={(e) => {onKeyPress(e)}}
+        onChange={e => setValue(e.target.value)}
+        onKeyPress={onKeyPress}
+        className={"form-control"}
+        value={value}
+        name="newChat"
+        id="newChat"
+        placeholder={"...your message..."}
+        cols="30"
+        rows="3">
 
           </textarea>
 

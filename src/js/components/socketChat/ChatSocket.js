@@ -1,4 +1,5 @@
 import React, {createContext} from 'react'
+import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
 import ChatMessage from "../ChatMessage";
 import {timeElapsedString} from "../../utils/time";
@@ -6,6 +7,7 @@ import * as api from "../../api/chatsApi";
 
 const wsUri = "wss://echo.websocket.org/"
 let websocket
+const messages = []  // could limit the size of the list for memory concerns
 
 export const joinChat = (userId, chat) => dispatch =>
   api.joinChat(userId, chat.id)
@@ -50,33 +52,116 @@ export const onClose = (evt) => {
   writeToScreen("DISCONNECTED")
 }
 
+// export const onMessage = (evt) => {
+//   // add response to messages with response attribute
+//   writeToScreen('<span style="color: blue">RESPONSE: ' + JSON.stringify(evt.data) + '</span>')
+//   console.log(`got response! `, evt.data)
+//   // websocket.close()
+// }
+
 export const onMessage = (evt) => {
   // add response to messages with response attribute
-  writeToScreen('<span style="color: blue">RESPONSE: ' + JSON.stringify(evt.data) + '</span>')
-  console.log(`got response! `, evt.data)
+  let receivedMsg = {
+    content: evt.data,
+    direction: 'inbound',
+    timestamp: new Date(),
+  }
+  // writeToScreen('<span style="color: blue">RESPONSE: ' + JSON.stringify(evt.data) + '</span>')
+  console.log(`Got response!: `, JSON.stringify(evt.data))
+  writeToScreen(receivedMsg)
+  // console.log(`got response! `, evt.data)
   // websocket.close()
 }
 
 export const onError = (evt) => {
-  console.log(`ther was an ERROR: `, evt.data)
+  console.log(`there was an ERROR: `, evt.data)
   // update the error display
   writeToScreen('<span style="color: red">ERROR:</span> ' + evt.data)
 }
 
 export const doSend = (message) => {
   // add message to messages with sent attribute
-  console.log(`sending message `, message)
-  writeToScreen("SENT: " + message)
+  // writeToScreen("SENT: " + {message})
+  writeToScreen(message)
+  console.log(`sending message `, JSON.stringify(message))
+  message = JSON.stringify(message)
   websocket.send(message)
 }
 
-export const writeToScreen = (message) => {
-  // add the message to the overall messages
-  const pre = document.createElement("p")
-  pre.style.wordWrap = "break-word"
-  pre.innerHTML = message
-  output.appendChild(pre)
+const createSocketMessageDiv = ({content, timestamp, direction}, msgId) => {  // make sure to add direction to the message
+  // timestamp
+  // message content
+  // incoming or outgoing
+  console.log(`creating socket message DIRECTION: `, direction)
+  let msgOutput, colorCode
+
+  if (direction === 'inbound') {
+    msgOutput = `RECEIVED: ${content}`;
+    colorCode = "turquoise"
+  } else if (direction === "outbound") {
+    msgOutput = `SENT: ${content}`;
+    colorCode = "pink";
+  } else {
+    msgOutput = `SYSTEM: ${content}`
+    colorCode = "greenyellow"
+  }
+  return (
+    <div key={msgId}
+         className={`socket-message ${direction ? direction : 'no-direction'}`}
+         style={{color: `${colorCode}`}}
+    >
+      {msgOutput}
+      <hr/>
+    </div>
+  );
 }
+
+export const writeMessages = () => {
+  // get all the messages and render them out
+  const messageDivs = messages.map((message, msgId) => {
+    // let msg = {'content': message}
+    return createSocketMessageDiv(message, msgId)
+  })
+
+  ReactDOM.render(messageDivs, document.getElementById('output'))
+}
+
+export const writeToScreen = (msg, direction = null) => {
+  // add the message to the overall messages
+  // const pre = document.createElement("p")
+  let message
+  if (msg && typeof msg.valueOf() === "string") {
+    console.log(`got a string --> converting to a message object`,)
+    message = {
+      content: msg,
+      timestamp: new Date(),
+      direction: direction || 'no-direction',
+    }
+    // s is a string
+  } else {
+    message = {...msg}
+    message.direction = msg.direction ? msg.direction : 'no-direction'
+  }
+  messages.push(message)
+  writeMessages()
+  // let element = createSocketMessageDiv(messages)
+  // console.log(`writeToScreen with : `, message)
+  // ReactDOM.render(element, document.getElementById('output'))
+  // note: maybe try div? const pre = document.createElement("div")
+  // const pre = createSocketMessageDiv(message)
+  // output.appendChild(pre)
+}
+
+// export const writeToScreen = (message) => {
+//   // add the message to the overall messages
+//   const pre = document.createElement("p")
+//   pre.style.wordWrap = "break-word"
+//   pre.innerHTML = message
+//   console.log(`writeToScreen with : `, message)
+//   output.appendChild(pre)
+// }
+
+
 // export const ChatSocket = () => {
 //   let output
 //
