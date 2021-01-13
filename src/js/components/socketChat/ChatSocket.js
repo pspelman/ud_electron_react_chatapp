@@ -18,7 +18,7 @@ export const joinChat = (userId, chat) => dispatch =>
 
 let output
 export const init = () => {
-  console.log(`INIT -> BEGIN`,)
+  console.log(`[ECHO SOCKET ] - INIT -> BEGIN`,)
   output = document.getElementById("output")
   testWebSocket()
 }
@@ -40,7 +40,7 @@ export const testWebSocket = () => {
 }
 
 export const onOpen = (evt) => {
-  console.log(`CONNECTED! `,)
+  console.log(`[ECHO SOCKET ] - CONNECTED! `,)
   // notify user connection is established
   writeToScreen("CONNECTED")
   doSend("WebSocket rocks")
@@ -67,7 +67,7 @@ export const onMessage = (evt) => {
     timestamp: new Date(),
   }
   // writeToScreen('<span style="color: blue">RESPONSE: ' + JSON.stringify(evt.data) + '</span>')
-  console.log(`Got response!: `, JSON.stringify(evt.data))
+  // console.log(`Got response!: `, JSON.stringify(evt.data))
   writeToScreen(receivedMsg)
   // console.log(`got response! `, evt.data)
   // websocket.close()
@@ -83,7 +83,7 @@ export const doSend = (message) => {
   // add message to messages with sent attribute
   // writeToScreen("SENT: " + {message})
   writeToScreen(message)
-  console.log(`sending message `, JSON.stringify(message))
+  // console.log(`sending message `, JSON.stringify(message))
   message = JSON.stringify(message)
   websocket.send(message)
 }
@@ -130,17 +130,21 @@ export const writeToScreen = (msg, direction = null) => {
   // add the message to the overall messages
   // const pre = document.createElement("p")
   let message
+  message = {
+    timestamp: new Date(),
+    direction: direction || 'no-direction',
+  }
   if (msg && typeof msg.valueOf() === "string") {
-    console.log(`got a string --> converting to a message object`,)
+    // s is a string
     message = {
       content: msg,
-      timestamp: new Date(),
-      direction: direction || 'no-direction',
     }
-    // s is a string
   } else {
-    message = {...msg}
-    message.direction = msg.direction ? msg.direction : 'no-direction'
+    message = {
+      ...message,
+      ...msg
+    }
+    // message.direction = msg.direction ? msg.direction : 'no-direction'
   }
   messages.push(message)
   writeMessages()

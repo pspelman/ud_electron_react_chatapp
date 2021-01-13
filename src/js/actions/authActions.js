@@ -25,6 +25,7 @@ export const loginUser = formData => dispatch => {
       return err
     });
 }
+
 export const listenToAuthChange = () => dispatch => {
   dispatch({type: 'AUTH_ON_INIT'})  // this fires off to initialize authentication
   return api.onAuthStateChanges(async authUser => {
@@ -34,16 +35,14 @@ export const listenToAuthChange = () => dispatch => {
       dispatch({type: 'AUTH_ON_SUCCESS', user: userProfile})
     } else {
       dispatch({type: 'AUTH_ON_ERROR', user: null, error: 'SOME ERROR ABOUT AUTH?'})
-      console.log(`We are NOT authenticated`, )
+      console.log(`We are NOT authenticated`,)
     }
   })
 }
 
 
-
-
 export const logoutUser = () => dispatch => {
-  console.log(`trying to logout`, )
+  console.log(`trying to logout`,)
   // dispatch({type: 'AUTH_LOGOUT_INIT'})
   api
     .logout()
@@ -52,8 +51,8 @@ export const logoutUser = () => dispatch => {
       dispatch({type: 'CHATS_FETCH_RESTART'})
     })
     .catch(err => {
-      console.log(`error logging out: `, err)
-      dispatch({type: 'AUTH_LOGOUT_ERROR', error: err})
+        console.log(`error logging out: `, err)
+        dispatch({type: 'AUTH_LOGOUT_ERROR', error: err})
       }
     )
 }

@@ -23,7 +23,7 @@ export const getUserProfile = uid =>
       let newData = snapshot.data()
       // console.log(`doing something with snapshot data: `, newData )
       return newData
-    }).catch(function(error) {
+    }).catch(function (error) {
     console.log(`Error getting document: `, error)
   })
 

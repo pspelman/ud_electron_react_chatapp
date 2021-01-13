@@ -41,6 +41,7 @@ html, body {
 
 .content-wrapper {
   height: 100%;
+  overflow-y: scroll;
   background-color: $gray-200;
   padding-top: 70px;
   transition: background-color 1s;

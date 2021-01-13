@@ -5,6 +5,8 @@ import authReducer from "../reducers/authReducer";
 import appReducer from "../reducers/appReducer";
 import appMiddleware from "./middlewares/appMiddleware";
 import settingsReducer from "../reducers/settingsReducer";
+import vsAuthReducer from "../reducers/vsAuthReducer";
+import vsChatReducer from "../reducers/vsChatReducer";
 // import {devToolsEnhancer} from "electron-redux-devtools";
 // import { devToolsEnhancer } from 'electron-redux-devtools';
 
@@ -30,6 +32,8 @@ export default function configureStore() {
   const mainReducer = combineReducers({  // Note: hook up the store, reducer, and action handlers (middleware)
     chats: chatReducer,
     auth: authReducer,
+    vs: vsAuthReducer,
+    vschats: vsChatReducer,
     app: appReducer,
     settings: settingsReducer,
   })
