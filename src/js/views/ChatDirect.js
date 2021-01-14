@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import {withBaseLayout} from "../layouts/Base";
 import Messenger from "../components/Messenger";
 import * as chatSocket from "../components/socketChat/ChatSocket";
+import ThreadsList from "../components/ThreadsList";
 
 const ChatDirectView = () => {
   const sendChatViaSocket = chat => {
@@ -20,8 +21,15 @@ const ChatDirectView = () => {
         </span>
       </div>
       <br/>
-      <div id={"output"}></div>
-      <div className={'container'}>
+      <div className={'row no-gutters fh'}>
+        <div className={'col-3 fh'}>
+          <div className="list-container">
+            <ThreadsList />
+          </div>
+        </div>
+        <div id={"output"} className={'col-9 fh'}></div>
+      </div>
+      <div>
         <Messenger onSubmit={chatSocket.doSend}/>
       </div>
     </div>

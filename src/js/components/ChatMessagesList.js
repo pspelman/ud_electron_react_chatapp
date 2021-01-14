@@ -13,7 +13,10 @@ export default function ChatMessagesList({messages = [], innerRef}) {
     <div className="chat-container">
       <ul ref={innerRef} className="chat-box chatContainerScroll">
         {/*<ChatMessage message={{content: 'fake message for now'}}/>*/}
-        {messages.map(message => <ChatMessage chatClass={isAuthor(message)} key={message.id} message={message}/>)}
+        {messages.map(message =>
+          <ChatMessage chatClass={isAuthor(message)}
+                       key={message.id}
+                       message={message}/>)}
       </ul>
       <br/>
       <br/>

@@ -96,6 +96,8 @@ html, body {
   -webkit-border-radius: 2px 0 0 2px;
   -moz-border-radius: 2px 0 0 2px;
   border-radius: 2px 0 0 2px;
+  min-height: 20px;
+
 }
 
 .chat-search-box .input-group .form-control:focus {

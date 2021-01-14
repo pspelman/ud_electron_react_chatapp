@@ -42,9 +42,23 @@ export const handleSocketMessage = (ev) => dispatch => {
   ack(data?.txnID)
   // attach the actions handler for socket messages
   if (data?.method === "sLoginComplete") {
-    console.log(`sLoginComplete detected! --> setting sessionData: `, data)
-    dispatch({'type': 'sLoginComplete', sessionData: data})
-    window.sessionData = {...data}
+    console.log(`sLoginComplete detected! --> setting sessionData: `, data);
+    dispatch({'type': 'sLoginComplete', sessionData: data});
+  }
+  if (data?.method === "sThreadCreate") {  // note: separate sThreadCreate for each thread I belong to
+    console.log(`sThreadCreate detected! --> adding to threads: `, data);
+    dispatch({'type': 'sThreadCreate', thread: data})
+  }
+  if (data?.method === "sServerDeletedThread") {  // note: server deleting thread for some reason
+    console.log(`sServerDeletedThread detected! --> : `, data)
+    dispatch({'type': 'sServerDeletedThread', thread: data})
+  }
+  if (data?.method === "sShredThread") {  // note: manually shredded by owner who is NOT ME
+    console.log(`sShredThread detected! --> : `, data)
+    dispatch({'type': 'sShredThread', thread: data})
+
+  } else {
+    console.log(`[vsConnect.js] - handleSocketMessage: `, JSON.stringify(data))
   }
 
 }
